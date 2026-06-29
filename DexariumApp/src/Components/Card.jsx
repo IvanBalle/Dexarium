@@ -1,32 +1,58 @@
-//import React from "react";
+import DisplayFormatInStars from "./DisplayFormatInStars.jsx"
 
-function Card({ item = {}, titleKey = "name" }) {
-    if (!item || typeof item !== "object") {
+function Card({ item, detailsOrder }) {
+    if (!item || !Array.isArray(item) || item.length === 0) {
         return null
     }
 
-    const title = item[titleKey] || item.title || item.name || Object.values(item).find((value) => typeof value === "string")
-    const entries = Object.entries(item).filter(([key]) => !["title", "name", "image", "icon", "synopsis"].includes(key))
+    // Default order: Publisher - Genres - Release Year - Country - Metacritic score - Average playtime
+    const defaultOrder = [
+        "publisher",
+        "genres",
+        "releaseYear",
+        "country",
+        "metacriticUserScore",
+        "rottenTomatoesScore",
+        "myAnimeListScore",
+        "imdbScore",
+        "averagePlaytime",
+        "duration",
+        "seasons",
+        "episodes",
+    ]
+    const orderToUse = detailsOrder || defaultOrder
+
+    const getDetailsByOrder = (entry) => {
+        // Filter out excluded keys and order the remaining by the specified order
+        const entryObj = Object.entries(entry).filter(([key]) => !["id", "title", "imageUrl", "synopsis"].includes(key))
+
+        // Sort by the order specified, then add any remaining keys not in the order
+        return [...orderToUse.filter((key) => key in entry).map((key) => [key, entry[key]]), ...entryObj.filter(([key]) => !orderToUse.includes(key))]
+    }
 
     return (
-        <article className="card">
-            {(item.image || item.icon) && (
-                <div className="card-media">
-                    <img src={item.image || item.icon} alt={title || "item"} />
-                </div>
-            )}
-
-            {title && <h2 className="card-title">{title}</h2>}
-
-            <dl className="card-details">
-                {entries.map(([key, value]) => (
-                    <div key={key} className="card-detail">
-                        <dt>{key}</dt>
-                        <dd>{String(value)}</dd>
-                    </div>
-                ))}
-            </dl>
-        </article>
+        <>
+            {item.map((entry) => (
+                <article key={entry.id} className="card">
+                    <div className="card-media"></div>
+                    {/*  {entry.imageUrl && <div className="card-media">{<img src={entry.imageUrl} alt={entry.title || "item"} />}</div>} */}
+                    {entry.title && <h2 className="card-title">{entry.title}</h2>}
+                    {
+                        <div className="card-details">
+                            {getDetailsByOrder(entry).map(([key, value]) => (
+                                <div key={key} className="card-detail">
+                                    {(() => {
+                                        const label = key.charAt(0).toUpperCase() + key.slice(1)
+                                        return label.replace(/([a-z])([A-Z])/g, "$1 $2")
+                                    })()}
+                                    : <DisplayFormatInStars value={value} keyName={key} />
+                                </div>
+                            ))}
+                        </div>
+                    }
+                </article>
+            ))}
+        </>
     )
 }
 

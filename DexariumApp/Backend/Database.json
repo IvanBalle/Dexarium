@@ -1103,7 +1103,7 @@
             "country": "United States"
         }
     ],
-    "anime": [
+    "animes": [
         {
             "id": 1,
             "title": "Attack on Titan",
@@ -1705,7 +1705,7 @@
             "synopsis": "A continuation of the abyss journey reveals darker secrets and terrifying new challenges."
         }
     ],
-    "series": [
+    "TVshows": [
         {
             "id": 1,
             "title": "Breaking Bad",
@@ -1715,7 +1715,6 @@
             "seasons": 5,
             "episodes": 62,
             "imdbScore": 9.5,
-            "sensCritiqueScore": 9.2,
             "country": "United States",
             "synopsis": "A chemistry teacher diagnosed with cancer turns to manufacturing meth to secure his family's future."
         },
@@ -1728,7 +1727,6 @@
             "seasons": 8,
             "episodes": 73,
             "imdbScore": 9.2,
-            "sensCritiqueScore": 8.7,
             "country": "United States",
             "synopsis": "Noble families fight for control of a mythical kingdom while an ancient threat rises in the north."
         },
@@ -1741,7 +1739,6 @@
             "seasons": 4,
             "episodes": 34,
             "imdbScore": 8.7,
-            "sensCritiqueScore": 8.0,
             "country": "United States",
             "synopsis": "A group of kids uncovers supernatural mysteries and secret government experiments in their small town."
         },
@@ -1754,7 +1751,6 @@
             "seasons": 11,
             "episodes": 177,
             "imdbScore": 8.1,
-            "sensCritiqueScore": 7.2,
             "country": "United States",
             "synopsis": "Survivors navigate a world overrun by zombies while struggling to maintain their humanity."
         },
@@ -1767,7 +1763,6 @@
             "seasons": 4,
             "episodes": 13,
             "imdbScore": 9.1,
-            "sensCritiqueScore": 8.9,
             "country": "United Kingdom",
             "synopsis": "A modern adaptation of Sherlock Holmes solving complex crimes in contemporary London."
         },
@@ -1780,7 +1775,6 @@
             "seasons": 9,
             "episodes": 201,
             "imdbScore": 9.0,
-            "sensCritiqueScore": 8.5,
             "country": "United States",
             "synopsis": "A mockumentary following the everyday lives of office employees in a mundane paper company."
         },
@@ -1793,7 +1787,6 @@
             "seasons": 10,
             "episodes": 236,
             "imdbScore": 8.9,
-            "sensCritiqueScore": 8.4,
             "country": "United States",
             "synopsis": "Six friends navigate love, careers, and life in New York City."
         },
@@ -1806,7 +1799,6 @@
             "seasons": 4,
             "episodes": 32,
             "imdbScore": 8.7,
-            "sensCritiqueScore": 8.0,
             "country": "United States",
             "synopsis": "In a world where superheroes are corrupt, a group of vigilantes fights to expose them."
         },
@@ -1819,7 +1811,6 @@
             "seasons": 4,
             "episodes": 36,
             "imdbScore": 8.5,
-            "sensCritiqueScore": 8.1,
             "country": "United States",
             "synopsis": "A futuristic theme park filled with AI hosts begins to spiral out of control."
         },
@@ -1832,7 +1823,6 @@
             "seasons": 2,
             "episodes": 18,
             "imdbScore": 8.5,
-            "sensCritiqueScore": 7.8,
             "country": "United States",
             "synopsis": "The Targaryen dynasty begins to fracture as a civil war over succession erupts."
         },
@@ -1845,7 +1835,6 @@
             "seasons": 3,
             "episodes": 26,
             "imdbScore": 8.7,
-            "sensCritiqueScore": 8.6,
             "country": "Germany",
             "synopsis": "A missing child exposes a time travel conspiracy spanning multiple generations in a small town."
         },
@@ -1858,7 +1847,6 @@
             "seasons": 5,
             "episodes": 41,
             "imdbScore": 8.2,
-            "sensCritiqueScore": 7.8,
             "country": "Spain",
             "synopsis": "A criminal mastermind recruits a group to carry out the biggest heist in history at the Royal Mint of Spain."
         },
@@ -1871,7 +1859,6 @@
             "seasons": 6,
             "episodes": 63,
             "imdbScore": 9.0,
-            "sensCritiqueScore": 8.9,
             "country": "United States",
             "synopsis": "The transformation of a small-time lawyer into the morally flexible attorney Saul Goodman."
         },
@@ -1884,7 +1871,6 @@
             "seasons": 3,
             "episodes": 24,
             "imdbScore": 8.0,
-            "sensCritiqueScore": 7.3,
             "country": "United States",
             "synopsis": "A monster hunter struggles to find his place in a world where people are often more dangerous than beasts."
         },
@@ -1897,7 +1883,6 @@
             "seasons": 2,
             "episodes": 12,
             "imdbScore": 8.2,
-            "sensCritiqueScore": 7.6,
             "country": "United States",
             "synopsis": "The God of Mischief is captured by a time organization and forced to fix timelines across the multiverse."
         },
@@ -1910,7 +1895,6 @@
             "seasons": 6,
             "episodes": 27,
             "imdbScore": 8.8,
-            "sensCritiqueScore": 8.5,
             "country": "United Kingdom",
             "synopsis": "An anthology series exploring dark and dystopian futures shaped by technology."
         },
@@ -1923,7 +1907,6 @@
             "seasons": 6,
             "episodes": 36,
             "imdbScore": 8.8,
-            "sensCritiqueScore": 8.4,
             "country": "United Kingdom",
             "synopsis": "A gangster family rises to power in post-World War I Birmingham, England."
         },
@@ -1936,7 +1919,6 @@
             "seasons": 3,
             "episodes": 30,
             "imdbScore": 8.8,
-            "sensCritiqueScore": 8.2,
             "country": "United States",
             "synopsis": "The rise and fall of Pablo Escobar and the Medellín drug cartel in Colombia."
         },
@@ -1949,7 +1931,6 @@
             "seasons": 3,
             "episodes": 24,
             "imdbScore": 8.6,
-            "sensCritiqueScore": 7.9,
             "country": "United States",
             "synopsis": "A lone bounty hunter travels through the outer reaches of the galaxy protecting a mysterious child."
         },
@@ -1962,7 +1943,6 @@
             "seasons": 8,
             "episodes": 177,
             "imdbScore": 8.7,
-            "sensCritiqueScore": 8.3,
             "country": "United States",
             "synopsis": "A brilliant but antisocial doctor solves complex medical cases with his diagnostic team."
         },
@@ -1975,7 +1955,6 @@
             "seasons": 6,
             "episodes": 60,
             "imdbScore": 8.6,
-            "sensCritiqueScore": 8.1,
             "country": "United Kingdom",
             "synopsis": "The life and reign of Queen Elizabeth II as she navigates political and personal challenges."
         },
@@ -1988,7 +1967,6 @@
             "seasons": 8,
             "episodes": 96,
             "imdbScore": 8.7,
-            "sensCritiqueScore": 8.0,
             "country": "United States",
             "synopsis": "A forensic expert secretly leads a double life as a vigilante serial killer targeting criminals."
         },
@@ -2001,7 +1979,6 @@
             "seasons": 9,
             "episodes": 134,
             "imdbScore": 8.4,
-            "sensCritiqueScore": 7.8,
             "country": "United States",
             "synopsis": "A college dropout with a photographic memory works as a lawyer despite never attending law school."
         },
@@ -2014,7 +1991,6 @@
             "seasons": 6,
             "episodes": 89,
             "imdbScore": 8.5,
-            "sensCritiqueScore": 8.0,
             "country": "Canada",
             "synopsis": "The legendary Norse hero Ragnar Lothbrok rises to become a king and explores new lands."
         },
@@ -2027,7 +2003,6 @@
             "seasons": 1,
             "episodes": 9,
             "imdbScore": 8.8,
-            "sensCritiqueScore": 8.4,
             "country": "United States",
             "synopsis": "A hardened survivor escorts a young girl across a post-apocalyptic America filled with infected threats."
         },
@@ -2040,7 +2015,6 @@
             "seasons": 1,
             "episodes": 8,
             "imdbScore": 7.7,
-            "sensCritiqueScore": 7.4,
             "country": "United States",
             "synopsis": "Young superheroes train at a university where power, corruption, and survival collide."
         },
@@ -2053,7 +2027,6 @@
             "seasons": 4,
             "episodes": 30,
             "imdbScore": 8.9,
-            "sensCritiqueScore": 8.5,
             "country": "United States",
             "synopsis": "Different detectives investigate complex and disturbing criminal cases across different timelines."
         },
@@ -2066,7 +2039,6 @@
             "seasons": 6,
             "episodes": 121,
             "imdbScore": 8.3,
-            "sensCritiqueScore": 8.0,
             "country": "United States",
             "synopsis": "Survivors of a plane crash find themselves on a mysterious island filled with secrets."
         },
@@ -2079,7 +2051,6 @@
             "seasons": 5,
             "episodes": 90,
             "imdbScore": 8.3,
-            "sensCritiqueScore": 7.9,
             "country": "United States",
             "synopsis": "A man deliberately gets imprisoned to help his brother escape death row."
         },
@@ -2092,7 +2063,6 @@
             "seasons": 4,
             "episodes": 36,
             "imdbScore": 7.9,
-            "sensCritiqueScore": 7.5,
             "country": "United States",
             "synopsis": "A dysfunctional family of adopted superheroes reunites to prevent an apocalypse."
         },
@@ -2105,7 +2075,6 @@
             "seasons": 2,
             "episodes": 18,
             "imdbScore": 9.0,
-            "sensCritiqueScore": 8.8,
             "country": "United States",
             "synopsis": "Two sisters find themselves on opposite sides of a growing conflict between a rich city and its oppressed underworld."
         },
@@ -2118,7 +2087,6 @@
             "seasons": 1,
             "episodes": 5,
             "imdbScore": 9.4,
-            "sensCritiqueScore": 9.0,
             "country": "United States",
             "synopsis": "The true story of the 1986 nuclear disaster and the sacrifices made to contain its aftermath."
         },
@@ -2131,7 +2099,6 @@
             "seasons": 4,
             "episodes": 45,
             "imdbScore": 8.5,
-            "sensCritiqueScore": 8.3,
             "country": "United States",
             "synopsis": "A cybersecurity engineer with social anxiety joins a hacker group aiming to take down corrupt corporations."
         },
@@ -2144,7 +2111,6 @@
             "seasons": 2,
             "episodes": 14,
             "imdbScore": 8.5,
-            "sensCritiqueScore": 8.2,
             "country": "United Kingdom",
             "synopsis": "A mockumentary following the awkward daily life of employees in a dull paper company."
         },
@@ -2157,7 +2123,6 @@
             "seasons": 7,
             "episodes": 125,
             "imdbScore": 8.6,
-            "sensCritiqueScore": 8.1,
             "country": "United States",
             "synopsis": "A public official tries to improve her small town with chaotic and optimistic enthusiasm."
         },
@@ -2170,7 +2135,6 @@
             "seasons": 5,
             "episodes": 60,
             "imdbScore": 9.3,
-            "sensCritiqueScore": 9.1,
             "country": "United States",
             "synopsis": "A deep look into Baltimore's drug scene through the eyes of both law enforcement and dealers."
         },
@@ -2183,7 +2147,6 @@
             "seasons": 5,
             "episodes": 52,
             "imdbScore": 7.8,
-            "sensCritiqueScore": 7.7,
             "country": "United States",
             "synopsis": "A single mother balances raising her children and working as an actress in Los Angeles."
         },
@@ -2196,7 +2159,6 @@
             "seasons": 5,
             "episodes": 51,
             "imdbScore": 8.9,
-            "sensCritiqueScore": 8.6,
             "country": "United States",
             "synopsis": "A collection of crime stories involving ordinary people in bizarre and violent situations."
         },
@@ -2209,7 +2171,6 @@
             "seasons": 2,
             "episodes": 16,
             "imdbScore": 8.3,
-            "sensCritiqueScore": 7.9,
             "country": "United States",
             "synopsis": "Teenagers navigate drugs, relationships, identity, and trauma in a modern high school setting."
         },
@@ -2222,7 +2183,6 @@
             "seasons": 6,
             "episodes": 77,
             "imdbScore": 8.8,
-            "sensCritiqueScore": 8.7,
             "country": "United States",
             "synopsis": "A washed-up actor struggles with fame, depression, and self-destruction in Hollywood."
         },
@@ -2235,7 +2195,6 @@
             "seasons": 4,
             "episodes": 39,
             "imdbScore": 8.8,
-            "sensCritiqueScore": 8.6,
             "country": "United States",
             "synopsis": "A dysfunctional billionaire family fights for control of a global media empire."
         },
@@ -2248,7 +2207,6 @@
             "seasons": 2,
             "episodes": 19,
             "imdbScore": 8.6,
-            "sensCritiqueScore": 8.5,
             "country": "United States",
             "synopsis": "Two FBI agents interview serial killers to understand and predict criminal behavior."
         },
@@ -2261,7 +2219,6 @@
             "seasons": 6,
             "episodes": 73,
             "imdbScore": 8.6,
-            "sensCritiqueScore": 8.0,
             "country": "United States",
             "synopsis": "A ruthless politician manipulates his way to the top of American power."
         },
@@ -2274,7 +2231,6 @@
             "seasons": 3,
             "episodes": 28,
             "imdbScore": 8.7,
-            "sensCritiqueScore": 8.4,
             "country": "United States",
             "synopsis": "A fine-dining chef returns home to run his family's chaotic sandwich shop."
         },
@@ -2287,7 +2243,6 @@
             "seasons": 7,
             "episodes": 71,
             "imdbScore": 9.1,
-            "sensCritiqueScore": 8.5,
             "country": "United States",
             "synopsis": "An eccentric scientist and his grandson travel through bizarre dimensions and realities."
         },
@@ -2300,7 +2255,6 @@
             "seasons": 1,
             "episodes": 8,
             "imdbScore": 8.1,
-            "sensCritiqueScore": 7.6,
             "country": "United States",
             "synopsis": "Wednesday Addams investigates supernatural mysteries at her new academy."
         },
@@ -2313,7 +2267,6 @@
             "seasons": 4,
             "episodes": 32,
             "imdbScore": 8.2,
-            "sensCritiqueScore": 7.9,
             "country": "United Kingdom",
             "synopsis": "A socially awkward teenager starts an underground therapy clinic at his school."
         },
@@ -2326,7 +2279,6 @@
             "seasons": 1,
             "episodes": 11,
             "imdbScore": 7.8,
-            "sensCritiqueScore": 7.5,
             "country": "United States",
             "synopsis": "The lord of dreams escapes captivity and attempts to restore order to his realm."
         },
@@ -2339,7 +2291,6 @@
             "seasons": 8,
             "episodes": 170,
             "imdbScore": 7.5,
-            "sensCritiqueScore": 7.0,
             "country": "United States",
             "synopsis": "A billionaire returns home after years stranded on an island and becomes a vigilante hero."
         },
@@ -2352,7 +2303,6 @@
             "seasons": 2,
             "episodes": 26,
             "imdbScore": 8.5,
-            "sensCritiqueScore": 7.8,
             "country": "United States",
             "synopsis": "A former soldier seeks brutal justice against those responsible for his family's death."
         }
