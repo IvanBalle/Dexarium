@@ -994,13 +994,13 @@
         },
         {
             "id": 41,
-            "title": "Joker",
+            "title": "The Truman Show",
             "imageUrl": "",
-            "releaseYear": 2019,
-            "genres": ["Crime", "Drama", "Thriller"],
-            "synopsis": "A mentally troubled comedian descends into madness and becomes the infamous Joker in Gotham City.",
-            "duration": "122 min",
-            "rottenTomatoesScore": "69%",
+            "releaseYear": 1998,
+            "genres": ["Drama", "Comedy"],
+            "synopsis": "A man gradually discovers that his entire life has been broadcast as a reality television show without his knowledge.",
+            "duration": "103 min",
+            "rottenTomatoesScore": "94%",
             "country": "United States"
         },
         {
@@ -1049,13 +1049,13 @@
         },
         {
             "id": 46,
-            "title": "Fight Club",
+            "title": "The Grand Budapest Hotel",
             "imageUrl": "",
-            "releaseYear": 1999,
-            "genres": ["Drama"],
-            "synopsis": "An insomniac office worker forms an underground fight club that evolves into a radical movement.",
-            "duration": "139 min",
-            "rottenTomatoesScore": "79%",
+            "releaseYear": 2014,
+            "genres": ["Comedy", "Adventure", "Crime"],
+            "synopsis": "A legendary hotel concierge and his protégé become entangled in a murder investigation and the theft of a priceless painting.",
+            "duration": "99 min",
+            "rottenTomatoesScore": "92%",
             "country": "United States"
         },
         {
@@ -1071,14 +1071,14 @@
         },
         {
             "id": 48,
-            "title": "Whiplash",
+            "title": "Oldboy",
             "imageUrl": "",
-            "releaseYear": 2014,
-            "genres": ["Drama", "Music"],
-            "synopsis": "A young drummer pushes himself to perfection under an abusive and obsessive music instructor.",
-            "duration": "107 min",
-            "rottenTomatoesScore": "94%",
-            "country": "United States"
+            "releaseYear": 2003,
+            "genres": ["Action", "Mystery", "Thriller"],
+            "synopsis": "After being imprisoned for years without explanation, a man is suddenly released and seeks revenge against those responsible.",
+            "duration": "120 min",
+            "rottenTomatoesScore": "82%",
+            "country": "South Korea"
         },
         {
             "id": 49,
@@ -1103,7 +1103,7 @@
             "country": "United States"
         }
     ],
-    "animes": [
+    "anime": [
         {
             "id": 1,
             "title": "Attack on Titan",
@@ -1694,15 +1694,15 @@
         },
         {
             "id": 50,
-            "title": "Made in Abyss: Dawn of the Deep Soul",
+            "title": "Monster",
             "imageUrl": "",
-            "releaseYear": 2020,
-            "genres": ["Adventure", "Fantasy", "Dark"],
-            "seasons": 0,
-            "episodes": 1,
-            "myAnimeListScore": 8.7,
+            "releaseYear": 2004,
+            "genres": ["Mystery", "Psychological", "Thriller"],
+            "seasons": 1,
+            "episodes": 74,
+            "myAnimeListScore": 8.88,
             "country": "Japan",
-            "synopsis": "A continuation of the abyss journey reveals darker secrets and terrifying new challenges."
+            "synopsis": "A brilliant neurosurgeon pursues a charismatic serial killer whose life he once chose to save."
         }
     ],
     "TVshows": [
