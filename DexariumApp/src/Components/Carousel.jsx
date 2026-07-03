@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
 function Carousel({ children, containerKey }) {
     const containerRef = useRef(null)
     const thumbRef = useRef(null)
     const [thumbStyle, setThumbStyle] = useState({ width: "0px", left: "0px", opacity: 0 })
+    const [canScroll, setCanScroll] = useState(false)
 
     const updateScrollThumb = () => {
         const container = containerRef.current
@@ -11,16 +12,28 @@ function Carousel({ children, containerKey }) {
         if (!container || !thumb) return
 
         const track = thumb.parentElement
-        const trackWidth = track ? track.clientWidth : 0
+        const area = container.parentElement
+        const trackWidth = area ? area.clientWidth : track ? track.clientWidth : 0
         const scrollableWidth = Math.max(0, container.scrollWidth - container.clientWidth)
+        const scrollable = scrollableWidth > 1 && trackWidth > 0
 
-        if (scrollableWidth <= 1 || trackWidth <= 0) {
+        setCanScroll(scrollable)
+
+        if (!scrollable) {
+            if (container.scrollLeft !== 0) {
+                container.scrollLeft = 0
+            }
             setThumbStyle({ width: "0px", left: "0px", opacity: 0 })
             return
         }
 
+        const clampedScrollLeft = Math.min(container.scrollLeft, scrollableWidth)
+        if (clampedScrollLeft !== container.scrollLeft) {
+            container.scrollLeft = clampedScrollLeft
+        }
+
         const thumbWidth = Math.max(36, trackWidth * (container.clientWidth / container.scrollWidth))
-        const ratio = container.scrollLeft / scrollableWidth
+        const ratio = clampedScrollLeft / scrollableWidth
         const thumbLeft = ratio * Math.max(0, trackWidth - thumbWidth)
 
         setThumbStyle({ width: `${thumbWidth}px`, left: `${thumbLeft}px`, opacity: 1 })
@@ -28,12 +41,31 @@ function Carousel({ children, containerKey }) {
 
     useEffect(() => {
         window.addEventListener("resize", updateScrollThumb)
-        updateScrollThumb()
-
         return () => {
             window.removeEventListener("resize", updateScrollThumb)
         }
     }, [])
+
+    useLayoutEffect(() => {
+        const container = containerRef.current
+        if (!container) return
+
+        updateScrollThumb()
+
+        const resizeObserver = new ResizeObserver(updateScrollThumb)
+        resizeObserver.observe(container)
+
+        const mutationObserver = new MutationObserver(updateScrollThumb)
+        mutationObserver.observe(container, {
+            childList: true,
+            subtree: true,
+        })
+
+        return () => {
+            resizeObserver.disconnect()
+            mutationObserver.disconnect()
+        }
+    }, [containerKey, children])
 
     const scrollCategory = (direction) => {
         const container = containerRef.current
@@ -45,16 +77,27 @@ function Carousel({ children, containerKey }) {
 
         if (maxScrollLeft <= 0) return
 
-        const nextLeft = direction === "left" ? container.scrollLeft - cardWidth : container.scrollLeft + cardWidth
+        const currentLeft = container.scrollLeft
+        const nextLeft = direction === "left" ? currentLeft - cardWidth : currentLeft + cardWidth
 
-        if (nextLeft <= 0) {
-            container.scrollTo({ left: maxScrollLeft, behavior: "smooth" })
-            return
-        }
-
-        if (nextLeft >= maxScrollLeft) {
-            container.scrollTo({ left: 0, behavior: "smooth" })
-            return
+        if (direction === "left") {
+            if (currentLeft <= 1) {
+                container.scrollTo({ left: maxScrollLeft, behavior: "smooth" })
+                return
+            }
+            if (nextLeft <= 0) {
+                container.scrollTo({ left: 0, behavior: "smooth" })
+                return
+            }
+        } else {
+            if (currentLeft >= maxScrollLeft - 1) {
+                container.scrollTo({ left: 0, behavior: "smooth" })
+                return
+            }
+            if (nextLeft >= maxScrollLeft) {
+                container.scrollTo({ left: maxScrollLeft, behavior: "smooth" })
+                return
+            }
         }
 
         container.scrollBy({ left: direction === "left" ? -cardWidth : cardWidth, behavior: "smooth" })
@@ -62,19 +105,19 @@ function Carousel({ children, containerKey }) {
 
     return (
         <div className="carousel-container">
-            <div className="category-nav">
-                <button className="category-nav-btn" onClick={() => scrollCategory("left")} aria-label="Scroll left">
+            <div className={`category-nav${canScroll ? "" : " category-nav-no-scroll"}`}>
+                <button className="category-nav-btn" onClick={() => scrollCategory("left")} aria-label="Scroll left" hidden={!canScroll}>
                     <span className="category-nav-btn-icon-before"></span>
                 </button>
                 <div className="category-scroll-area">
-                    <div ref={containerRef} data-scroll-container={containerKey} className="category-items" onScroll={updateScrollThumb}>
+                    <div ref={containerRef} data-scroll-container={containerKey} className={`category-items${canScroll ? "" : " category-items-center"}`} onScroll={updateScrollThumb}>
                         {children}
                     </div>
-                    <div className="category-scrollbar">
+                    <div className="category-scrollbar" hidden={!canScroll}>
                         <div ref={thumbRef} className="custom-scroll-thumb" style={thumbStyle} />
                     </div>
                 </div>
-                <button className="category-nav-btn" onClick={() => scrollCategory("right")} aria-label="Scroll right">
+                <button className="category-nav-btn" onClick={() => scrollCategory("right")} aria-label="Scroll right" hidden={!canScroll}>
                     <span className="category-nav-btn-icon-after"></span>
                 </button>
             </div>

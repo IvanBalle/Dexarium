@@ -10,7 +10,7 @@ function FilterList({ onFiltersChange, selectedCategory }) {
         games: DB.games || [],
         movies: DB.movies || [],
         anime: DB.anime || [],
-        tvshows: DB.TVshows || [],
+        TVshows: DB.TVshows || [],
     }
     const sortTextValues = (values) => [...new Set(values.filter((value) => value != null))].sort((a, b) => String(a).localeCompare(String(b)))
     const sortNumberValues = (values) => [...new Set(values.filter((value) => value != null))].sort((a, b) => Number(a) - Number(b))
@@ -68,21 +68,23 @@ function FilterList({ onFiltersChange, selectedCategory }) {
                         return (
                             <div key={groupName} id={groupName} className="filter-group">
                                 <button type="button" className="filter-group-title" onClick={() => setActiveGroup((prev) => (prev === groupName ? null : groupName))}>
-                                    {groupName}
+                                    {(() => {
+                                        const label = groupName.charAt(0).toUpperCase() + groupName.slice(1)
+                                        return label.replace(/([a-z])([A-Z])/g, "$1 $2")
+                                    })()}
                                 </button>
                                 {isActive && (
                                     <div className="filter-options">
                                         {Array.isArray(values)
-                                            ? values.map((value) => (
-                                                  <label key={value} className="filter-checkbox">
-                                                      <input
-                                                          type="checkbox"
-                                                          checked={(selectedFilters[groupName] || []).includes(value)}
-                                                          onChange={(event) => handleFilterChange(groupName, value, event.target.checked)}
-                                                      />
-                                                      {value}
-                                                  </label>
-                                              ))
+                                            ? values.map((value) => {
+                                                  const isChecked = (selectedFilters[groupName] || []).includes(value)
+                                                  return (
+                                                      <label key={value} className={`filter-checkbox ${isChecked ? "filter-checkbox-active" : ""}`}>
+                                                          <input type="checkbox" checked={isChecked} onChange={(event) => handleFilterChange(groupName, value, event.target.checked)} />
+                                                          <span>{value}</span>
+                                                      </label>
+                                                  )
+                                              })
                                             : Object.entries(values).map(([categoryKey, categoryValues]) => {
                                                   const isGenreActive = activeGenreGroup === categoryKey
 
@@ -90,10 +92,13 @@ function FilterList({ onFiltersChange, selectedCategory }) {
                                                       <div key={categoryKey} id={categoryKey} className="filter-subgroup">
                                                           <button
                                                               type="button"
-                                                              className="filter-subgroup-title"
+                                                              className={`filter-subgroup-title ${isGenreActive ? "filter-subgroup-title-active" : ""}`}
                                                               onClick={() => setActiveGenreGroup((prev) => (prev === categoryKey ? null : categoryKey))}
                                                           >
-                                                              {categoryKey}
+                                                              {(() => {
+                                                                  const label = categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1)
+                                                                  return label.replace(/([A-Z]+[A-Z])([a-z])/g, "$1 $2")
+                                                              })()}
                                                           </button>
                                                           {isGenreActive && (
                                                               <div className="filter-options">
@@ -104,7 +109,7 @@ function FilterList({ onFiltersChange, selectedCategory }) {
                                                                               checked={(selectedFilters[`genres:${categoryKey}`] || []).includes(value)}
                                                                               onChange={(event) => handleFilterChange(`genres:${categoryKey}`, value, event.target.checked)}
                                                                           />
-                                                                          {value}
+                                                                          <span>{value}</span>
                                                                       </label>
                                                                   ))}
                                                               </div>

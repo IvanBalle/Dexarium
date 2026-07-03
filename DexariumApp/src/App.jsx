@@ -7,7 +7,7 @@ import Carousel from "./Components/Carousel.jsx"
 import SearchBar from "./Components/SearchBar.jsx"
 import FilterList from "./Components/FilterList.jsx"
 
-function App() {
+function App({ initialCategory = null }) {
     console.log(DB)
 
     const categories = [
@@ -16,7 +16,8 @@ function App() {
         { key: "anime", titleKey: "Anime", items: DB.anime || [] },
         { key: "tvshows", titleKey: "TV shows", items: DB.TVshows || [] },
     ]
-    const [selectedCategory, setSelectedCategory] = useState(null)
+
+    const selectedCategory = categories.some((item) => item.key === initialCategory) ? initialCategory : null
     const [searchResults, setSearchResults] = useState([])
     const [hasSearched, setHasSearched] = useState(false)
     const [activeFilters, setActiveFilters] = useState({})
@@ -77,8 +78,17 @@ function App() {
 
     return (
         <>
-            <Nav onCategoryChange={setSelectedCategory} />
+            <Nav />
             <section className="center">
+                <section className="app-intro">
+                    <h1 className="app-title">Dexarium</h1>
+                    <p className="app-description">Discover and explore a wide range of games, movies, anime, and TV shows.</p>
+                    <p className="app-description">Use the search bar to find specific titles or apply filters to narrow down your options.</p>
+                    <p className="app-description">Click on any item to view more details about it.</p>
+                    <p className="app-description">Enjoy your journey through the world of entertainment!</p>
+                </section>
+            </section>
+            <section className="content">
                 <SearchBar setSearchResults={setSearchResults} setHasSearched={setHasSearched} />
                 <FilterList onFiltersChange={setActiveFilters} selectedCategory={selectedCategory} />
                 {hasSearched && searchResults.length === 0 ? (

@@ -8,12 +8,12 @@ h2 {
     align-items: center;
     padding: 1rem 2rem;
     color: #fff;
-    a:link,
+    a,
     a:visited {
         text-decoration: none;
         color: #fff;
     }
-    a:active {
+    a.active {
         text-decoration: underline;
         font-weight: bold;
         color: #ffbe0b;
@@ -72,7 +72,8 @@ h2 {
     color: #f0f4ef;
 }
 .filter-toggle-button {
-    background-color: #a31621;
+    background-color: rgba(163, 22, 33, 0.95);
+    outline: 3px solid #000;
     color: #f0f4ef;
     border: none;
     border-radius: 8px;
@@ -83,50 +84,63 @@ h2 {
 
 .filter-list {
     width: 100%;
-    outline: 3px solid #a31621;
-    padding: 16px;
-    background-color: rgba(0, 0, 0, 0.35);
     color: #f0f4ef;
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
 }
 
-.filter-group {
-    background-color: #a31621;
-    padding: 8px 10px;
-    border-radius: 8px;
-    width: 160px;
-    min-width: 160px;
-    max-width: 160px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    position: relative;
-    align-self: flex-start;
-}
-
 .filter-group-title,
 .filter-subgroup-title {
     margin: 0;
+    text-align: left;
     font-size: 1.1rem;
     cursor: pointer;
     background: transparent;
     color: inherit;
     border: none;
-    padding: 0;
-    text-align: left;
-    width: 100%;
+}
+
+.filter-subgroup-title-active,
+.filter-group-title-active {
+    color: #ffbe0b;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.filter-group {
+    width: auto;
+    max-width: 100%;
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+}
+.filter-group,
+.filter-subgroup {
+    background-color: rgba(163, 22, 33, 0.95);
+    outline: 3px solid #000;
+    border-radius: 12px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    gap: 8px;
 }
 
 .filter-options {
+    position: absolute;
+    left: calc(100% + 14px);
+    top: 0;
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-top: 4px;
-    padding-left: 4px;
-    width: 100%;
-    box-sizing: border-box;
+    padding: 12px;
+    background-color: inherit;
+    outline: 3px solid #000;
+    border-radius: 12px;
+    z-index: 10;
 }
 
 .filter-checkbox {
@@ -136,35 +150,19 @@ h2 {
     font-size: 0.95rem;
 }
 
-.filter-subgroup {
-    padding-left: 6px;
-    border-left: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-#releaseYear {
-    outline: 3px solid green;
-}
-#country {
-    outline: 3px solid cyan;
-}
-#publisher {
-    outline: 3px solid yellow;
-}
 #genres {
-    outline: 3px solid pink;
-    padding: 8px;
+    flex-direction: row;
+    align-items: flex-start;
+    max-height: 24px;
 }
-#games {
-    outline: 3px solid orange;
+#genres > .filter-options {
+    padding: 0;
+    background-color: transparent;
+    outline: none;
+    gap: 12px;
 }
-#movies {
-    outline: 3px solid purple;
-}
-#anime {
-    outline: 3px solid lime;
-}
-#tvshows {
-    outline: 3px solid fuchsia;
+#genres .filter-subgroup {
+    z-index: 1000;
 }
 .category-section {
     width: 100%;
@@ -186,6 +184,11 @@ h2 {
     width: 100%;
     position: relative;
     padding-bottom: 16px;
+}
+
+.category-nav-no-scroll {
+    justify-content: center;
+    padding-bottom: 0;
 }
 
 .category-nav-btn {
@@ -239,6 +242,10 @@ h2 {
     -ms-overflow-style: none;
 }
 
+.category-items-center {
+    justify-content: center;
+}
+
 .category-scrollbar {
     position: absolute;
     left: 3px;
@@ -256,7 +263,6 @@ h2 {
     bottom: 0;
     left: 0;
     height: 100%;
-    /* width: 50px; */
     border-radius: 999px;
     background: #a31621;
     pointer-events: none;

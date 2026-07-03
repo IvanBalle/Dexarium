@@ -1,66 +1,27 @@
-import { useState } from "react"
+import { NavLink } from "react-router-dom"
 
-const Nav = ({ onCategoryChange }) => {
-    const [activeCategory, setActiveCategory] = useState(null)
-
-    const handleCategoryClick = (category) => {
-        setActiveCategory(category)
-        onCategoryChange(category)
-    }
-
-    const isActive = (category) => activeCategory === category
+const Nav = () => {
+    const isActiveClass = ({ isActive }) => (isActive ? "active" : "")
 
     return (
         <nav className="navbar">
-            <a className="navbar-logo" href="/">
+            <NavLink className="navbar-logo" to="/" end>
                 <div className="navbar-logo-icon-placeholder"></div>
                 Dexarium
-            </a>
+            </NavLink>
             <span className="navbar-links">
-                <a
-                    href="/games"
-                    className={isActive("games") ? "active" : ""}
-                    aria-current={isActive("games") ? "page" : undefined}
-                    onClick={(e) => {
-                        e.preventDefault()
-                        handleCategoryClick("games")
-                    }}
-                >
+                <NavLink to="/games" className={isActiveClass}>
                     Games
-                </a>
-                <a
-                    href="/movies"
-                    className={isActive("movies") ? "active" : ""}
-                    aria-current={isActive("movies") ? "page" : undefined}
-                    onClick={(e) => {
-                        e.preventDefault()
-                        handleCategoryClick("movies")
-                    }}
-                >
+                </NavLink>
+                <NavLink to="/movies" className={isActiveClass}>
                     Movies
-                </a>
-                <a
-                    href="/anime"
-                    className={isActive("anime") ? "active" : ""}
-                    aria-current={isActive("anime") ? "page" : undefined}
-                    onClick={(e) => {
-                        e.preventDefault()
-                        handleCategoryClick("anime")
-                    }}
-                >
+                </NavLink>
+                <NavLink to="/anime" className={isActiveClass}>
                     Anime
-                </a>
-                <a
-                    href="/tvshows"
-                    className={isActive("tvshows") ? "active" : ""}
-                    aria-current={isActive("tvshows") ? "page" : undefined}
-                    onClick={(e) => {
-                        e.preventDefault()
-                        handleCategoryClick("tvshows")
-                    }}
-                >
+                </NavLink>
+                <NavLink to="/tvshows" className={isActiveClass}>
                     TV Shows
-                </a>
+                </NavLink>
             </span>
         </nav>
     )
