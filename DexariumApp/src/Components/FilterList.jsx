@@ -10,7 +10,7 @@ function FilterList({ onFiltersChange, selectedCategory }) {
         games: DB.games || [],
         movies: DB.movies || [],
         anime: DB.anime || [],
-        TVshows: DB.TVshows || [],
+        tvshows: DB.TVshows || [],
     }
     const sortTextValues = (values) => [...new Set(values.filter((value) => value != null))].sort((a, b) => String(a).localeCompare(String(b)))
     const sortNumberValues = (values) => [...new Set(values.filter((value) => value != null))].sort((a, b) => Number(a) - Number(b))
@@ -97,7 +97,8 @@ function FilterList({ onFiltersChange, selectedCategory }) {
                                                           >
                                                               {(() => {
                                                                   const label = categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1)
-                                                                  return label.replace(/([A-Z]+[A-Z])([a-z])/g, "$1 $2")
+                                                                  const tvshowlabel = categoryKey?"TV shows":label
+                                                                  return categoryKey==="tvshows"? tvshowlabel.replace(/([T-V])([a-z])/g, "$1 $2"):label.replace(/([A-Z]+[A-Z])([a-z])/g, "$1 $2")
                                                               })()}
                                                           </button>
                                                           {isGenreActive && (

@@ -2,8 +2,10 @@
     font-family: system-ui, "Segoe UI", Roboto, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-    color: #6b6375;
-    background-color: #17255a;
+    --color: #f0f4ef;
+    --background-color: #17255a;
+    --accent-color-yellow:#ffbe0b;
+    --accent-color-red:#a31621;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -13,10 +15,11 @@
 body {
     margin: 0;
     min-width: 320px;
+    background-color:var(--background-color);
 }
 
 #root {
-    width: 85vw;
+    width: 75svw;
     max-width: 100%;
     margin: 0 auto;
     min-height: 100svh;

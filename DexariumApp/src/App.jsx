@@ -87,7 +87,7 @@ function App({ initialCategory = null }) {
                     <p className="app-description">Click on any item to view more details about it.</p>
                     <p className="app-description">Enjoy your journey through the world of entertainment!</p>
                 </section>
-            </section>
+            
             <section className="content">
                 <SearchBar setSearchResults={setSearchResults} setHasSearched={setHasSearched} />
                 <FilterList onFiltersChange={setActiveFilters} selectedCategory={selectedCategory} />
@@ -112,6 +112,7 @@ function App({ initialCategory = null }) {
                         </section>
                     ))
                 )}
+                </section>
             </section>
         </>
     )
