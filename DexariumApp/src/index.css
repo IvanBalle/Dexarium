@@ -2,16 +2,55 @@
     font-family: system-ui, "Segoe UI", Roboto, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-    --color: #f0f4ef;
-    --background-color: #17255a;
-    --accent-color-yellow:#ffbe0b;
-    --accent-color-red:#a31621;
+    /*--color: rgba(240, 244, 239, 1);
+    --background-color: rgba(15, 23, 42, 1);
+    --accent-color-yellow:rgb(255, 190, 11, 1);
+    --accent-color-red:rgba(163, 22, 33, 1);
+    --accent-color-red-95: rgba(163, 22, 33, 0.95);
+    --black-shadow-10: rgba(0, 0, 0, 0.1);
+    --main-accent: rgba(0, 0, 0, 0.35);
+    --black-shadow-80: rgba(0, 0, 0, 0.8);
+    --black-shadow-100: rgba(0, 0, 0, 1);
+    --white-hover-25:rgba(255, 255, 255, 0.25);
+    --white-hover-15: rgba(255, 255, 255, 0.15);
+    --white-hover-10: rgba(255, 255, 255, 0.1);
+    --tea-green-100: rgba(195, 218, 195, 1);*/
+
+    --background-color:	#0F172A;
+    --nav-cards-color: #17255A;
+    --nav-cards-color-50:rgb(23, 37, 90, 0.5);
+    --main-color: #3B82F6;
+    --accent-color: #60A5FA;
+    --active-color:#FDCA40;
+    --text-color: #F8FAFC;
+    --secondary-text-color: #CBD5E1;
+    --borders-color:#334155;
+
+
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+:root[data-theme="light"]{
+    /*--color:rgba(0, 0, 0, 1);
+    --background-color:rgba(240, 244, 239, 1);
+    --black-shadow-10: rgba(0, 0, 0, 0.1);
+    --main-accent: rgba(240, 244, 239, 1);
+    --black-shadow-80: rgba(0, 0, 0, 0.8);
+    --black-shadow-100: rgba(0, 0, 0, 1);
+    --white-hover-25:rgba(255, 255, 255, 0.25);
+    --white-hover-15: rgba(255, 255, 255, 0.15);
+    --white-hover-10: rgba(255, 255, 255, 0.1);*/
 
+	--background-color:#F8FAFC;
+    --nav-cards-color:#FFFFFF;
+    --main-color: #17255A;
+    --accent-color: #2563EB;
+    --text-color: #1E293B;
+    --secondary-text-color:	#64748B;
+    --borders-color:#E2E8F0;
+}
 body {
     margin: 0;
     min-width: 320px;

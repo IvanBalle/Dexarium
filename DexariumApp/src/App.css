@@ -1,6 +1,6 @@
 
 h2 {
-    color: var(--color)
+    color: var(--text-color)
 }
 .navbar {
     display: grid;
@@ -8,21 +8,22 @@ h2 {
     text-align: center;
     align-items: center;
     padding: 1rem 2rem;
-    color: var(--color);
-    background-color: rgba(0, 0, 0, 0.35);
+    color: var(--text-color);
+    background-color: var(--nav-cards-color);
     position: absolute;
     top:0;
     left:0;
     width:100%;
+    border-bottom: 2px solid var(--black-shadow-10);
     a,
     a:visited {
         text-decoration: none;
-        color: var(--color);
+        color: var(--text-color);
     }
     a.active {
         text-decoration: underline;
         font-weight: bold;
-        color: var(--accent-color-yellow);
+        color: var(--active-color);
     }
     .navbar-logo-icon-placeholder {
         width: 40px;
@@ -54,7 +55,7 @@ h2 {
 
 .app-intro{
     text-align: center;
-    color: var(--color);
+    color: var(--text-color);
 }
 .search-bar-container {
     display: flex;
@@ -63,6 +64,7 @@ h2 {
     width: 100%;
     min-height: 40px;
     justify-content: center;
+    margin-bottom: 2rem;
     .search-bar {
         width: 100%;
         max-width: 500px;
@@ -81,59 +83,69 @@ h2 {
     width: 100%;
     text-align: center;
     font-size: 3.5rem;
-    color: var(--color);
+    color: var(--text-color);
+}
+.filters-container{
+    margin-bottom:5rem;
+    z-index:100;
+    position:relative;
 }
 .filter-toggle-button {
-    background-color: var(--accent-color-red);
-    outline: 3px solid #000;
-    color: #f0f4ef;
+    background-color: var(--accent-color);
+    outline: 3px solid var(--borders-color);
+    color: var(--text-color);
     border: none;
     border-radius: 8px;
-    padding: 0.6rem 1rem;
+    padding: 0.5rem 0.6rem;
+    font-size:1.1rem;
+    font-weight: 600;
     cursor: pointer;
     margin-bottom: 12px;
 }
 
 .filter-list {
     width: 100%;
-    color: var(--color);
+    color: var(--text-color);
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    max-width: max-content;
     gap: 12px;
+    position: absolute;
+    top: 0rem;
+    left: 4.8em;
 }
 
 .filter-group-title,
 .filter-subgroup-title {
     margin: 0;
-    text-align: left;
     font-size: 1.1rem;
     cursor: pointer;
     background: transparent;
     color: inherit;
     border: none;
-    width: max-content;
 }
 
 .filter-subgroup-title-active,
-.filter-group-title-active {
-    color: #ffbe0b;
+.filter-group-title-active,
+.filter-checkbox-active{
+    color: var(--active-color);
     font-weight: bold;
     text-decoration: underline;
 }
 
 .filter-group {
-    width: auto;
+    min-width: stretch;
     max-width: 100%;
     position: relative;
     display: inline-flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
 }
 .filter-group,
 .filter-subgroup {
-    background-color: rgba(163, 22, 33, 0.95);
-    outline: 3px solid #000;
+    background-color: var(--accent-color);
+    outline: 3px solid var(--borders-color);
     border-radius: 12px;
     padding: 8px 10px;
     display: flex;
@@ -141,19 +153,21 @@ h2 {
     align-self: flex-start;
     gap: 8px;
 }
-
+.filter-options{
+    z-index:1000;
+}
 .filter-options {
     position: absolute;
-    left: 60%;
-    top: 80%;
+    left: 9em;
+    top: 0em;
     display: flex;
     flex-direction: column;
     gap: 6px;
     padding: 12px;
     background-color: inherit;
-    outline: 3px solid #000;
+    outline: 3px solid var(--borders-color);
     border-radius: 12px;
-    z-index: 10;
+    min-width:max-content;
 }
 
 .filter-checkbox {
@@ -163,19 +177,21 @@ h2 {
     font-size: 0.95rem;
 }
 
-#genres {
-    flex-direction: row;
-    align-items: flex-start;
-    max-height: 24px;
-}
 #genres > .filter-options {
     padding: 0;
     background-color: transparent;
     outline: none;
     gap: 12px;
 }
-#genres .filter-subgroup {
-    z-index: 1000;
+#genres .filter-subgroup{
+    position:relative;
+}
+.filter-subgroup{
+    width:100%;
+}
+.filter-subgroup .filter-options{
+    position: absolute;
+    left: 8.5em;
 }
 .category-section {
     display:grid;
@@ -190,13 +206,11 @@ h2 {
     font-size: 2rem;
     margin: 0 0 8px;
     grid-row:1;
-    grid-column: 2;
 }
 .carousel-container {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--nav-cards-color-50);
     border-radius: 12px;
     grid-row:2;
-    grid-column: 2;
     padding-inline: clamp(12px, 4vw, 32px);
 }
 .category-nav {
@@ -223,13 +237,14 @@ h2 {
     align-self:center;
     border: none;
     border-radius: 12px;
-    background-color: rgba(0, 0, 0, 0.35);
-    color: #11637c;
+    background-color: var(--nav-cards-color);
+    color: var(--text-color);
     font-size: 2rem;
     cursor: pointer;
     flex-shrink: 0;
     position: relative;
     margin-inline:auto;
+    outline: 3px solid var(--borders-color);
 
     .category-nav-btn-icon-before{
         grid-row:2;
@@ -258,8 +273,8 @@ h2 {
     }
     
     &:hover {
-        background: rgba(17, 99, 124, 0.25);
-        color: #ffbe0b;
+        background: var(--accent-color);
+        color: var(--active-color);
     }
 }
 
@@ -299,7 +314,7 @@ h2 {
     bottom: 8px;
     height: 4px;
     border-radius: 999px;
-    background: rgba(17, 99, 124, 0.16);
+    background: var(--background-color);
     overflow: hidden;
 }
 
@@ -310,7 +325,7 @@ h2 {
     left: 0;
     height: 100%;
     border-radius: 999px;
-    background: #a31621;
+    background: var(--main-color);
     pointer-events: none;
     opacity: 1;
     transition: opacity 0.2s ease;
@@ -324,11 +339,14 @@ h2 {
     scroll-snap-align: start;
     scroll-snap-stop: always;
     border-radius: 12px;
-    outline: 3px solid #a31621;
-    background-color: rgba(0, 0, 0, 0.35);
+    outline: 3px solid var(--borders-color);
+    background-color: var(--nav-cards-color);
+    display:grid;
+    grid-template-rows: 2fr 0.7fr 2fr;
+    max-height: 500px;
 
     &:hover h2 {
-        color: #ffbe0b;
+        color: var(--active-color);
         cursor: pointer;
     }
 }
@@ -337,9 +355,10 @@ h2 {
     background-color: #11637c;
     height: 200px;
     width: 100%;
-    border-bottom: #0f19af solid 3px;
+    border-bottom: 3px solid var(--borders-color);
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
+    grid-row: 1;
 }
 
 .card-title {
@@ -347,11 +366,14 @@ h2 {
     font-weight: bold;
     margin: 0.5rem 0;
     text-align: center;
+    grid-row:2;
+    padding-inline:0.2rem;
 }
 
 .card-details {
     font-size: 1rem;
-    color: #666;
+    color: var(--secondary-text-color);
     text-align: left;
     padding: 0.5rem;
+    grid-row:3;
 }

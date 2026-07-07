@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom"
+import ColorScheme from "./ColorScheme"
 
 const Nav = () => {
     const isActiveClass = ({ isActive }) => (isActive ? "active" : "")
@@ -23,6 +24,7 @@ const Nav = () => {
                     TV Shows
                 </NavLink>
             </span>
+            <ColorScheme />
         </nav>
     )
 }

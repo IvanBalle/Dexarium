@@ -55,7 +55,7 @@ function FilterList({ onFiltersChange, selectedCategory }) {
     }
 
     return (
-        <>
+        <div className="filters-container">
             <button className="filter-toggle-button" onClick={() => setIsOpen((prev) => !prev)}>
                 Filters
             </button>
@@ -67,7 +67,7 @@ function FilterList({ onFiltersChange, selectedCategory }) {
 
                         return (
                             <div key={groupName} id={groupName} className="filter-group">
-                                <button type="button" className="filter-group-title" onClick={() => setActiveGroup((prev) => (prev === groupName ? null : groupName))}>
+                                <button type="button" className={`filter-group-title ${isActive ? "filter-group-title-active" : ""}`} onClick={() => setActiveGroup((prev) => (prev === groupName ? null : groupName))}>
                                     {(() => {
                                         const label = groupName.charAt(0).toUpperCase() + groupName.slice(1)
                                         return label.replace(/([a-z])([A-Z])/g, "$1 $2")
@@ -125,7 +125,7 @@ function FilterList({ onFiltersChange, selectedCategory }) {
                     })}
                 </div>
             )}
-        </>
+        </div>
     )
 }
 
