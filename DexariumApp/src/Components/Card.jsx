@@ -1,6 +1,6 @@
 import DisplayFormatInStars from "./DisplayFormatInStars.jsx"
 
-function Card({ item, detailsOrder }) {
+function Card({ item, detailsOrder, onSelectItem }) {
     if (!item || !Array.isArray(item) || item.length === 0) {
         return null
     }
@@ -33,7 +33,19 @@ function Card({ item, detailsOrder }) {
     return (
         <>
             {item.map((entry) => (
-                <article key={entry.id} className="card">
+                <article
+                    key={entry.id}
+                    className="card"
+                    onClick={() => onSelectItem?.(entry)}
+                    onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault()
+                            onSelectItem?.(entry)
+                        }
+                    }}
+                    tabIndex={0}
+                    role="button"
+                >
                     <div className="card-media"></div>
                     {/*  {entry.imageUrl && <div className="card-media">{<img src={entry.imageUrl} alt={entry.title || "item"} />}</div>} */}
                     {entry.title && <h2 className="card-title">{entry.title}</h2>}

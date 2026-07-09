@@ -6,6 +6,7 @@ import Card from "./Components/Card.jsx"
 import Carousel from "./Components/Carousel.jsx"
 import SearchBar from "./Components/SearchBar.jsx"
 import FilterList from "./Components/FilterList.jsx"
+import Lightbox from "./Components/Lightbox.jsx"
 
 function App({ initialCategory = null }) {
     console.log(DB)
@@ -21,6 +22,7 @@ function App({ initialCategory = null }) {
     const [searchResults, setSearchResults] = useState([])
     const [hasSearched, setHasSearched] = useState(false)
     const [activeFilters, setActiveFilters] = useState({})
+    const [selectedItem, setSelectedItem] = useState(null)
 
     const visibleCategories = selectedCategory ? categories.filter(({ key }) => key === selectedCategory) : categories
     const filteredSearchResults = selectedCategory ? searchResults.filter(({ key }) => key === selectedCategory) : searchResults
@@ -98,7 +100,7 @@ function App({ initialCategory = null }) {
                         <section key={group.key} className="category-section">
                             <h2 className="category-title">{group.titleKey}</h2>
                             <Carousel containerKey={group.key}>
-                                <Card item={group.items} titleKey={group.titleKey} />
+                                <Card item={group.items} titleKey={group.titleKey} onSelectItem={setSelectedItem} />
                             </Carousel>
                         </section>
                     ))
@@ -107,13 +109,14 @@ function App({ initialCategory = null }) {
                         <section key={key} className="category-section">
                             <h2 className="category-title">{titleKey}</h2>
                             <Carousel containerKey={key}>
-                                <Card item={items} titleKey={titleKey} />
+                                <Card item={items} titleKey={titleKey} onSelectItem={setSelectedItem} />
                             </Carousel>
                         </section>
                     ))
                 )}
                 </section>
             </section>
+            <Lightbox item={selectedItem} onClose={() => setSelectedItem(null)} />
         </>
     )
 }
