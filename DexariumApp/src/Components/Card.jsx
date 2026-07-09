@@ -7,6 +7,10 @@ function Card({ item, detailsOrder, onSelectItem }) {
 
     // Default order: Publisher - Genres - Release Year - Country - Metacritic score - Average playtime
     const defaultOrder = [
+        "developer",
+        "director",
+        "studio",
+        "creator",
         "publisher",
         "genres",
         "releaseYear",
@@ -24,7 +28,7 @@ function Card({ item, detailsOrder, onSelectItem }) {
 
     const getDetailsByOrder = (entry) => {
         // Filter out excluded keys and order the remaining by the specified order
-        const entryObj = Object.entries(entry).filter(([key]) => !["id", "title", "imageUrl", "synopsis"].includes(key))
+        const entryObj = Object.entries(entry).filter(([key]) => !["id", "title", "slug", "synopsis"].includes(key))
 
         // Sort by the order specified, then add any remaining keys not in the order
         return [...orderToUse.filter((key) => key in entry).map((key) => [key, entry[key]]), ...entryObj.filter(([key]) => !orderToUse.includes(key))]
