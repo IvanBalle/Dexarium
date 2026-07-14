@@ -32,7 +32,7 @@ function Lightbox({ item, onClose }) {
         "episodes",
     ]
 
-    const detailEntries = Object.entries(item).filter(([key]) => !["id", "title", "imageUrl", "synopsis"].includes(key))
+    const detailEntries = Object.entries(item).filter(([key]) => !["id", "title", "slug", "synopsis"].includes(key))
     const orderedDetails = [
         ...defaultOrder.filter((key) => key in item).map((key) => [key, item[key]]),
         ...detailEntries.filter(([key]) => !defaultOrder.includes(key)),

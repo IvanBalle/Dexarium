@@ -1,11 +1,12 @@
 import { useState } from "react"
 import DB from "../../Backend/Database.json"
+import { FILTER_CONFIG } from "../Utils/FilterConfig"
 
 function FilterList({ onFiltersChange, selectedCategory }) {
-    const [isOpen, setIsOpen] = useState(false)
-    const [activeGroup, setActiveGroup] = useState(null)
-    const [activeGenreGroup, setActiveGenreGroup] = useState(null)
+    const [activeSection, setActiveSection] = useState(null)
+    const [activeGroup, setActiveGroup] = useState({})
     const [selectedFilters, setSelectedFilters] = useState({})
+
     const allItems = {
         games: DB.games || [],
         movies: DB.movies || [],
@@ -15,142 +16,126 @@ function FilterList({ onFiltersChange, selectedCategory }) {
     const sortTextValues = (values) => [...new Set(values.filter((value) => value != null))].sort((a, b) => String(a).localeCompare(String(b)))
     const sortNumberValues = (values) => [...new Set(values.filter((value) => value != null))].sort((a, b) => Number(a) - Number(b))
 
-    const allFilters = {
-        releaseYear: sortNumberValues(Object.values(allItems).flatMap((items) => items.map((item) => item.releaseYear))),
-        country: sortTextValues(Object.values(allItems).flatMap((items) => items.map((item) => item.country))),
-        publisher: sortTextValues(Object.values(allItems).flatMap((items) => items.map((item) => item.publisher))),
-        developer: sortTextValues(Object.values(allItems).flatMap((items) => items.map((item) => item.developer))),
-        director: Object.fromEntries(Object.entries(allItems).map(([key, items]) => [key, sortTextValues(items.flatMap((item) => item.director || []))])),
-        studio: Object.fromEntries(Object.entries(allItems).map(([key, items]) => [key, sortTextValues(items.flatMap((item) => item.studio || []))])),
-        creator: Object.fromEntries(Object.entries(allItems).map(([key, items]) => [key, sortTextValues(items.flatMap((item) => item.creator || []))])),
-        genres: Object.fromEntries(Object.entries(allItems).map(([key, items]) => [key, sortTextValues(items.flatMap((item) => item.genres || []))])),
+    
+    const buildFilterValues = (items, filter) => {
+        const values = items.flatMap(item => {
+            const value = item[filter.key];
+            return Array.isArray(value) ? value : [value];
+        });
+
+        return filter.type === "number"
+            ? sortNumberValues(values)
+            : sortTextValues(values);
     }
 
-    const activeItems = selectedCategory ? allItems[selectedCategory] : Object.values(allItems).flatMap((items) => items)
-    const visibleFilters = {
-        releaseYear: sortNumberValues(activeItems.map((item) => item.releaseYear)),
-        country: sortTextValues(activeItems.map((item) => item.country)),
-        ...(selectedCategory
-            ? selectedCategory === "games"
-                ? { publisher: sortTextValues(activeItems.map((item) => item.publisher)) }
-                : {}
-            : { publisher: sortTextValues(activeItems.map((item) => item.publisher)) }),
-        ...(selectedCategory
-            ? selectedCategory === "games"
-                ? { developer: sortTextValues(activeItems.map((item) => item.developer)) }
-                : {}
-            : { developer: sortTextValues(activeItems.map((item) => item.developer)) }),
-        ...(selectedCategory
-            ? selectedCategory === "movies"
-                ? { director: sortTextValues(activeItems.map((item) => item.director)) }
-                : {}
-            : { director: sortTextValues(activeItems.map((item) => item.director)) }),
-        ...(selectedCategory
-            ? selectedCategory === "anime"
-                ? { studio: sortTextValues(activeItems.map((item) => item.studio)) }
-                : {}
-            : { studio: sortTextValues(activeItems.map((item) => item.studio)) }),
-        ...(selectedCategory
-            ? selectedCategory === "tvshows"
-                ? { developer: sortTextValues(activeItems.map((item) => item.developer)) }
-                : {}
-            : { developer: sortTextValues(activeItems.map((item) => item.developer)) }),
-        genres: selectedCategory ? { [selectedCategory]: allFilters.genres[selectedCategory] } : allFilters.genres,
+    const buildFilterSections  = () => {
+        return Object.entries(FILTER_CONFIG)
+            .filter(([key]) => !selectedCategory || key === selectedCategory)
+            .map(([key, config]) => {
+
+                const items = selectedCategory
+                    ? allItems[selectedCategory]
+                    : allItems[key];
+
+                return {
+
+                    key,
+
+                    title: config.title,
+
+                    filters: config.filters.map(filter => ({
+
+                        ...filter,
+
+                        values: buildFilterValues(items, filter)
+
+                    }))
+
+                };
+
+            });
     }
-    const handleFilterChange = (filterKey, value, checked) => {
+    
+    const filterSections = buildFilterSections();
+    const handleFilterChange = (fullKey, value, checked) => {
+      
         const nextFilters = { ...selectedFilters }
 
-        if (!nextFilters[filterKey]) {
-            nextFilters[filterKey] = []
+        if (!nextFilters[fullKey]) {
+            nextFilters[fullKey] = []
         }
 
         if (checked) {
-            nextFilters[filterKey] = [...nextFilters[filterKey], value]
+            nextFilters[fullKey] = [...nextFilters[fullKey], value]
         } else {
-            nextFilters[filterKey] = nextFilters[filterKey].filter((item) => item !== value)
+            nextFilters[fullKey] = nextFilters[fullKey].filter((item) => item !== value)
         }
 
-        if (nextFilters[filterKey].length === 0) {
-            delete nextFilters[filterKey]
+        if (nextFilters[fullKey].length === 0) {
+            delete nextFilters[fullKey]
         }
 
         setSelectedFilters(nextFilters)
         onFiltersChange?.(nextFilters)
     }
 
+   const formatTitle = text => text.charAt(0).toUpperCase() + text.slice(1).replace(/([a-z])([A-Z])/g, "$1 $2");
+    
     return (
-        <div className="filters-container">
-            <button className="filter-toggle-button" onClick={() => setIsOpen((prev) => !prev)}>
-                Filters
-            </button>
+        <div className="filters-container">  
+            <h5>
+                Filters:
+            </h5>
+            <div className="section-list">
+                {filterSections.map((section) => {
+                    const isActive = activeSection === section.key
 
-            {isOpen && (
-                <div className="filter-list">
-                    {Object.entries(visibleFilters).map(([groupName, values]) => {
-                        const isActive = activeGroup === groupName
+                    return (
+                        
+                        <div key={section.key} id={section.key} className="filter-section">
+                            <button type="button" className={`filter-section-title ${isActive ? "filter-section-title-active" : ""}`} onClick={() => setActiveSection(prev => prev === section.key ? null : section.key)}>
+                                {formatTitle(section.title)}
+                            </button>
 
-                        return (
-                            <div key={groupName} id={groupName} className="filter-group">
-                                <button type="button" className={`filter-group-title ${isActive ? "filter-group-title-active" : ""}`} onClick={() => setActiveGroup((prev) => (prev === groupName ? null : groupName))}>
-                                    {(() => {
-                                        const label = groupName.charAt(0).toUpperCase() + groupName.slice(1)
-                                        return label.replace(/([a-z])([A-Z])/g, "$1 $2")
-                                    })()}
-                                </button>
-                                {isActive && (
-                                    <div className="filter-options">
-                                        {Array.isArray(values)
-                                            ? values.map((value) => {
-                                                  const isChecked = (selectedFilters[groupName] || []).includes(value)
-                                                  return (
-                                                      <label key={value} className={`filter-checkbox ${isChecked ? "filter-checkbox-active" : ""}`}>
-                                                          <input type="checkbox" checked={isChecked} onChange={(event) => handleFilterChange(groupName, value, event.target.checked)} />
-                                                          <span>{value}</span>
-                                                      </label>
-                                                  )
-                                              })
-                                            : Object.entries(values).map(([categoryKey, categoryValues]) => {
-                                                  const isGenreActive = activeGenreGroup === categoryKey
+                            {isActive && (
+                                <div className="group-list">
+                                    {section.filters.map(filter => {
+                                        const isGroupOpen = activeGroup[section.key] === filter.key;
 
-                                                  return (
-                                                      <div key={categoryKey} id={categoryKey} className="filter-subgroup">
-                                                          <button
-                                                              type="button"
-                                                              className={`filter-subgroup-title ${isGenreActive ? "filter-subgroup-title-active" : ""}`}
-                                                              onClick={() => setActiveGenreGroup((prev) => (prev === categoryKey ? null : categoryKey))}
-                                                          >
-                                                              {(() => {
-                                                                  const label = categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1)
-                                                                  const tvshowlabel = categoryKey?"TV shows":label
-                                                                  return categoryKey==="tvshows"? tvshowlabel.replace(/([T-V])([a-z])/g, "$1 $2"):label.replace(/([A-Z]+[A-Z])([a-z])/g, "$1 $2")
-                                                              })()}
-                                                          </button>
-                                                          {isGenreActive && (
-                                                              <div className="filter-options">
-                                                                  {categoryValues.map((value) => (
-                                                                      <label key={value} className="filter-checkbox">
-                                                                          <input
-                                                                              type="checkbox"
-                                                                              checked={(selectedFilters[`genres:${categoryKey}`] || []).includes(value)}
-                                                                              onChange={(event) => handleFilterChange(`genres:${categoryKey}`, value, event.target.checked)}
-                                                                          />
-                                                                          <span>{value}</span>
-                                                                      </label>
-                                                                  ))}
-                                                              </div>
-                                                          )}
-                                                      </div>
-                                                  )
-                                              })}
-                                    </div>
-                                )}
-                            </div>
-                        )
-                    })}
-                </div>
-            )}
+                                        return(
+                                            <div key={filter.key} className="filter-group">
+                                                <button  className={`filter-group-title ${isGroupOpen ? "filter-group-title-active" : ""}`} onClick={() => setActiveGroup(prev => ({ ...prev, [section.key]: prev[section.key] === filter.key ? null : filter.key })) }>
+                                                    {filter.label}
+                                                </button>
+                                                {isGroupOpen && ( 
+                                                    <div className="filter-options">
+                                                        {filter.values.map(value => {
+                                                            const fullKey = `${section.key}.${filter.key}`;
+                                                            const checked = (selectedFilters[fullKey] || []).includes(value);
+
+                                                            return (
+                                                                <label key={value} className={`filter-checkbox ${checked ? "filter-checkbox-active" : ""}`}>
+                                                                <input type="checkbox" checked={checked} onChange={(event) =>  handleFilterChange(fullKey, value, event.target.checked)}/>
+                                                                {value}
+                                                                </label>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            )}
+                        </div>
+                    )
+                })}
+            </div>    
         </div>
+        
+            
     )
 }
+
 
 export default FilterList

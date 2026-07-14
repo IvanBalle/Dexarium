@@ -7,6 +7,7 @@ import Carousel from "./Components/Carousel.jsx"
 import SearchBar from "./Components/SearchBar.jsx"
 import FilterList from "./Components/FilterList.jsx"
 import Lightbox from "./Components/Lightbox.jsx"
+import { matchesFilters } from "./Utils/MatchesFilter.js"
 
 function App({ initialCategory = null }) {
     console.log(DB)
@@ -19,8 +20,7 @@ function App({ initialCategory = null }) {
     ]
 
     const selectedCategory = categories.some((item) => item.key === initialCategory) ? initialCategory : null
-    const filterCategories = categories.flat((item) => item.key)
-    console.log(filterCategories)
+
     const [searchResults, setSearchResults] = useState([])
     const [hasSearched, setHasSearched] = useState(false)
     const [activeFilters, setActiveFilters] = useState({})
@@ -29,48 +29,7 @@ function App({ initialCategory = null }) {
     const visibleCategories = selectedCategory ? categories.filter(({ key }) => key === selectedCategory) : categories
     const filteredSearchResults = selectedCategory ? searchResults.filter(({ key }) => key === selectedCategory) : searchResults
 
-    const matchesFilters = (item, categoryKey, filterKey, selectedValues) => {
-        if (!selectedValues.length) return true
-
-        if (filterKey === "releaseYear") {
-            return selectedValues.includes(item.releaseYear)
-        }
-
-        if (filterKey === "country") {
-            return selectedValues.includes(item.country)
-        }
-
-        if (filterKey === "publisher") {
-            return selectedValues.includes(item.publisher)
-        }
-
-        if (filterKey === "developer") {
-            return selectedValues.includes(item.developer)
-        }
-
-        if (filterKey === "director") {
-            return selectedValues.some((value) => item.director?.includes(value))
-        }
-
-        if (filterKey === "studio") {
-            return selectedValues.some((value) => item.studio?.includes(value))
-        }
-
-        if (filterKey === "creator") {
-            return selectedValues.some((value) => item.creator?.includes(value))
-        }
-
-        if (filterKey.startsWith("genres:")) {
-            const genreCategory = filterKey.replace("genres:", "")
-            if (selectedCategory && genreCategory !== selectedCategory) {
-                return true
-            }
-            return genreCategory === categoryKey && selectedValues.some((value) => item.genres?.includes(value))
-        }
-
-        return true
-    }
-
+    
     const getFilteredItems = (items, categoryKey) => {
         if (!items) return []
 
@@ -78,7 +37,16 @@ function App({ initialCategory = null }) {
             const matchesCategory = !selectedCategory || categoryKey === selectedCategory
             const matchesSearch = !searchResults.length || filteredSearchResults.some((group) => group.key === categoryKey)
 
-            const matchesFiltersForItem = Object.entries(activeFilters).every(([filterKey, selectedValues]) => matchesFilters(item, categoryKey, filterKey, selectedValues))
+            const matchesFiltersForItem = Object.entries(activeFilters).every(([fullKey, selectedValues]) => {
+
+                const [filterCategory, filterKey] = fullKey.split(".");
+
+                if (filterCategory !== categoryKey) {
+                    return true;
+                }
+
+                return matchesFilters(item,filterKey,selectedValues);
+            });
 
             return matchesCategory && matchesSearch && matchesFiltersForItem
         })
