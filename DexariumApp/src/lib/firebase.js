@@ -1,14 +1,15 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBlR1sW_bw2afgHnQP6-MtBJbCb-aK69jE",
-  authDomain: "dexarium-f9896.firebaseapp.com",
-  projectId: "dexarium-f9896",
-  storageBucket: "dexarium-f9896.firebasestorage.app",
-  messagingSenderId: "930355720623",
-  appId: "1:930355720623:web:3d86b1a11df9813a0a3f5a",
-  measurementId: "G-89KDB91B59"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
