@@ -79,8 +79,9 @@ function FilterList({ onFiltersChange, selectedCategory }) {
         onFiltersChange?.(nextFilters)
     }
 
-   const formatTitle = text => text.charAt(0).toUpperCase() + text.slice(1).replace(/([a-z])([A-Z])/g, "$1 $2");
-    
+   const formatTitle = text => text.charAt(0).toUpperCase() + text.slice(1).replace(/([a-z])([A-Z])/g, "$1 $2")
+   const currentSection = filterSections.find(section => section.key === activeSection)
+   const currentGroup = currentSection? currentSection.filters.find(filter => filter.key === activeGroup[currentSection.key]) : null
     return (
         <div className="filters-container">  
             <h5>
@@ -89,51 +90,71 @@ function FilterList({ onFiltersChange, selectedCategory }) {
             <div className="section-list">
                 {filterSections.map((section) => {
                     const isActive = activeSection === section.key
-
+                    
                     return (
-                        
                         <div key={section.key} id={section.key} className="filter-section">
-                            <button type="button" className={`filter-section-title ${isActive ? "filter-section-title-active" : ""}`} onClick={() => setActiveSection(prev => prev === section.key ? null : section.key)}>
+                            <button type="button"
+                                className={`filter-section-title ${isActive ? "filter-section-title-active" : ""}`}
+                                onClick={() => {
+                                    setActiveSection(prev => {
+                                        const next = prev === section.key ? null : section.key
+
+                                        if (next !== prev) {
+                                            setActiveGroup({})
+                                        }
+
+                                        return next
+                                    })
+                                }}
+                            >
                                 {formatTitle(section.title)}
                             </button>
-
-                            {isActive && (
-                                <div className="group-list">
-                                    {section.filters.map(filter => {
-                                        const isGroupOpen = activeGroup[section.key] === filter.key;
-
-                                        return(
-                                            <div key={filter.key} className="filter-group">
-                                                <button  className={`filter-group-title ${isGroupOpen ? "filter-group-title-active" : ""}`} onClick={() => setActiveGroup(prev => ({ ...prev, [section.key]: prev[section.key] === filter.key ? null : filter.key })) }>
-                                                    {filter.label}
-                                                </button>
-                                                {isGroupOpen && ( 
-                                                    <div className="filter-options">
-                                                        {filter.values.map(value => {
-                                                            const fullKey = `${section.key}.${filter.key}`;
-                                                            const checked = (selectedFilters[fullKey] || []).includes(value);
-
-                                                            return (
-                                                                <label key={value} className={`filter-checkbox ${checked ? "filter-checkbox-active" : ""}`}>
-                                                                <input type="checkbox" checked={checked} onChange={(event) =>  handleFilterChange(fullKey, value, event.target.checked)}/>
-                                                                {value}
-                                                                </label>
-                                                            );
-                                                        })}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            )}
                         </div>
                     )
                 })}
-            </div>    
+            </div>
+            {currentSection && (
+                <div className="group-list">
+                    {currentSection.filters.map(filter => {
+                            const isGroupOpen = activeGroup[currentSection.key] === filter.key;
+
+                            return(
+                                <div key={filter.key} className="filter-group">
+                                    <button 
+                                        className={`filter-group-title ${isGroupOpen ? "filter-group-title-active" : ""}`} 
+                                        onClick={() =>
+                                            setActiveGroup(prev => ({
+                                                ...prev, [currentSection.key]:
+                                                prev[currentSection.key] === filter.key
+                                                ? null: filter.key
+                                            }))
+                                        }
+                                    >
+                                        {filter.label}
+                                    </button>
+                                </div>
+                            )
+                        }
+                    )}
+                </div>
+                )}
+
+            {currentGroup && (
+                <div className="filter-options">
+                    {currentGroup.values.map(value => {
+                        const fullKey = `${currentSection.key}.${currentGroup.key}`;
+                        const checked = (selectedFilters[fullKey] || []).includes(value);
+
+                        return (
+                            <label key={value} className={`filter-checkbox ${checked ? "filter-checkbox-active" : ""}`}>
+                                <input type="checkbox" checked={checked} onChange={(event) =>  handleFilterChange(fullKey, value, event.target.checked)}/>
+                                {value}
+                            </label>
+                        )
+                    })}
+                </div>
+            )}               
         </div>
-        
-            
     )
 }
 

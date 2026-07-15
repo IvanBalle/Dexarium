@@ -52,7 +52,10 @@ h2 {
     padding: 32px 20px;
     margin-top:4rem;
 }
-
+.center,
+.content{
+    width:100%;
+}
 .app-intro{
     text-align: center;
     color: var(--text-color);
@@ -85,47 +88,50 @@ h2 {
     font-size: 3.5rem;
     color: var(--text-color);
 }
+
 .filters-container{
-    margin-bottom:5rem;
+    margin-bottom:3rem;
     display:flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     gap: 12px;
-}
+    padding-block:5px;
+    outline: 3px dotted red;
 
+    h5{
+        margin-block:0;
+    }
+}
 
 .section-list,
 .group-list {
     color: var(--text-color);
-    display: flex;
     min-width: max-content;
     gap: 12px;
     
 }
-.section-list{
-    flex-direction: row;
-    position:relative;
-}
 
+.section-list{
+    display:grid;
+    grid-template-columns: repeat(4, 230px);
+    max-width: 70svw;
+}
 
 .filter-section,
 .filter-group {
     align-self: flex-start;
-    text-align: center;  
-}
-.filter-group{
- position:relative;
 }
 
 .group-list{
-    position: absolute;
+    display: flex;
     z-index: 100;
-    width: 70svw;
-    top: 3rem;
-    left: -9.7rem;
-    justify-content: space-evenly
+    width: 100%;
+    justify-content: space-evenly;
+    margin-top: 10px;
 }
+
 .filter-section-title,
 .filter-group-title {
     background-color: var(--accent-color);
@@ -148,23 +154,22 @@ h2 {
 }
 
 .filter-options {
-    position: absolute;
-    /*left: 9em;*/
-    top: 3em;
     display: grid;
-    grid-template-columns: repeat(3 , 1fr);
+    grid-template-columns: repeat(4  , 1fr);
+    max-width: 70svw;
     gap: 6px;
     padding: 12px;
     background-color: var(--accent-color);
     outline: 3px solid var(--borders-color);
     border-radius: 12px;
-    min-width:max-content;
+    min-width:min-content;
     z-index:1000;
 }
 
 .filter-checkbox {
     display: flex;
     align-items: center;
+    text-align: left;
     gap: 6px;
     font-size: 0.95rem;
 }
@@ -173,8 +178,6 @@ h2 {
     display:grid;
     width: 75svw;
     grid-template-rows: 50px 1fr;
- 
-    padding-inline: clamp(12px, 4vw, 32px);
 }
 
 .category-title {
