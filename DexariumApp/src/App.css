@@ -97,8 +97,8 @@ h2 {
     align-items: center;
     text-align: center;
     gap: 12px;
+    color:  var(--text-color);
     padding-block:5px;
-    outline: 3px dotted red;
 
     h5{
         margin-block:0;

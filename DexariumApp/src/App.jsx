@@ -8,6 +8,10 @@ import SearchBar from "./Components/SearchBar.jsx"
 import FilterList from "./Components/FilterList.jsx"
 import Lightbox from "./Components/Lightbox.jsx"
 import { matchesFilters } from "./Utils/MatchesFilter.js"
+import { useFetch } from "./Hooks/fetch_hook.js"
+import { getPopularMovies, getPopularTvShows } from "./Services/api/tmdb.js"
+import { getAnime } from "./Services/api/jikan.js"
+import { getPopularGames } from "./Services/api/rawg.js"
 
 function App({ initialCategory = null }) {
     console.log(DB)
@@ -29,7 +33,15 @@ function App({ initialCategory = null }) {
     const visibleCategories = selectedCategory ? categories.filter(({ key }) => key === selectedCategory) : categories
     const filteredSearchResults = selectedCategory ? searchResults.filter(({ key }) => key === selectedCategory) : searchResults
 
-    
+    const movies = useFetch(getPopularMovies);
+    const tvShows = useFetch(getPopularTvShows);
+    console.log("Movies title :", movies.map((movie) => movie.title))
+    console.log("TV Shows title :",tvShows.map((tvshow) => tvshow.name))
+    const anime = useFetch(getAnime)
+    console.log("Anime title JP :", anime.map((oneAnime) => oneAnime.title.default))
+    console.log("Anime title EN :", anime.map((oneAnime) => oneAnime.title.english != null ? oneAnime.title.english : oneAnime.title.default))
+    const games = getPopularGames
+    console.log("Game title", games)
     const getFilteredItems = (items, categoryKey) => {
         if (!items) return []
 

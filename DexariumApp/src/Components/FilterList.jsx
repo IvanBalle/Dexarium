@@ -55,10 +55,11 @@ function FilterList({ onFiltersChange, selectedCategory }) {
 
             });
     }
-    
+    const formatTitle = text => text.charAt(0).toUpperCase() + text.slice(1).replace(/([a-z])([A-Z])/g, "$1 $2")
     const filterSections = buildFilterSections();
     const handleFilterChange = (fullKey, value, checked) => {
-      
+        const tagName = formatTitle(fullKey).replace(".", " ")
+        console.log(tagName, value)
         const nextFilters = { ...selectedFilters }
 
         if (!nextFilters[fullKey]) {
@@ -79,7 +80,7 @@ function FilterList({ onFiltersChange, selectedCategory }) {
         onFiltersChange?.(nextFilters)
     }
 
-   const formatTitle = text => text.charAt(0).toUpperCase() + text.slice(1).replace(/([a-z])([A-Z])/g, "$1 $2")
+   
    const currentSection = filterSections.find(section => section.key === activeSection)
    const currentGroup = currentSection? currentSection.filters.find(filter => filter.key === activeGroup[currentSection.key]) : null
     return (
