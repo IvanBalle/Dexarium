@@ -1,17 +1,15 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
-import { useLocation } from 'react-router-dom'
+import { useLocation } from "react-router-dom"
 
-
-function Carousel({ children, containerKey }) {
+function Carousel({ children, containerKey, loadMore, loading }) {
     const containerRef = useRef(null)
     const thumbRef = useRef(null)
     const [thumbStyle, setThumbStyle] = useState({ width: "0px", left: "0px", opacity: 0 })
     const [canScroll, setCanScroll] = useState(false)
-    
-    const location = useLocation()
-    const notHome = location.pathname !== '/'
 
-        
+    const location = useLocation()
+    const notHome = location.pathname !== "/"
+
     const updateScrollThumb = () => {
         const container = containerRef.current
         const thumb = thumbRef.current
@@ -97,27 +95,56 @@ function Carousel({ children, containerKey }) {
                 return
             }
         } else {
-            if (currentLeft >= maxScrollLeft - 1) {
+            /* if (currentLeft >= maxScrollLeft - 1) {
                 container.scrollTo({ left: 0, behavior: "smooth" })
                 return
+            } */
+            if (currentLeft >= maxScrollLeft - 1) {
+                loadMore?.()
+                return
             }
-            if (nextLeft >= maxScrollLeft) {
+            /* if (nextLeft >= maxScrollLeft) {
                 container.scrollTo({ left: maxScrollLeft, behavior: "smooth" })
+                return
+            } */
+            if (nextLeft >= maxScrollLeft) {
+                loadMore?.()
+                container.scrollTo({
+                    left: maxScrollLeft,
+                    behavior: "smooth",
+                })
                 return
             }
         }
 
         container.scrollBy({ left: direction === "left" ? -cardWidth : cardWidth, behavior: "smooth" })
     }
+    const handleScroll = () => {
+        updateScrollThumb()
 
+        const container = containerRef.current
+        if (!container) return
+
+        const isNearEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth - 100
+        console.log("scroll")
+        console.log(isNearEnd)
+        if (isNearEnd && !loading) {
+            loadMore?.()
+        }
+    }
     return (
-        <div className={`carousel-container ${notHome ? 'not-home' : ''}`}>
+        <div className={`carousel-container ${notHome ? "not-home" : ""}`}>
             <div className={`category-nav${canScroll ? "" : " category-nav-no-scroll"}`}>
                 <button className="category-nav-btn" onClick={() => scrollCategory("left")} aria-label="Scroll left" hidden={!canScroll}>
                     <span className="category-nav-btn-icon-before"></span>
                 </button>
                 <div className="category-scroll-area">
-                    <div ref={containerRef} data-scroll-container={containerKey} className={`category-items ${canScroll ? "" : " category-items-center"} ${notHome ? 'not-home-content' : ''}`} onScroll={updateScrollThumb}>
+                    <div
+                        ref={containerRef}
+                        data-scroll-container={containerKey}
+                        className={`category-items ${canScroll ? "" : " category-items-center"} ${notHome ? "not-home-content" : ""}`}
+                        onScroll={handleScroll}
+                    >
                         {children}
                     </div>
                     <div className="category-scrollbar" hidden={!canScroll}>
