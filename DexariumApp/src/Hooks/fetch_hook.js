@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export function useFetch(fetchFunction) {
+export function useFetch(fetchFunction, getId = item => item.id) {
     const [data, setData] = useState([])
     const [page, setPage] = useState(1)
     const [loading, setLoading] = useState(false)
@@ -9,22 +9,39 @@ export function useFetch(fetchFunction) {
         async function fetchData() {
             setLoading(true)
 
-            const results = await fetchFunction(page)
+            try {
+                const results = await fetchFunction(page)
 
-            setData((prev) => [...prev, ...results])
+                if (!Array.isArray(results)) return
 
-            setLoading(false)
+                setData(prev => {
+                    const ids = new Set(prev.map(getId))
+
+                    return [
+                        ...prev,
+                        ...results.filter(item => !ids.has(getId(item)))
+                    ]
+                })
+            }
+            catch(err) {
+                console.error(err)
+            }
+            finally {
+                setLoading(false)
+            }
         }
 
         fetchData()
     }, [page, fetchFunction])
 
+
     const loadMore = () => {
         console.log("loadMore")
-        if (!loading) {
-            setPage((prev) => prev + 1)
-        }
+        if (loading) return
+
+        setPage(prev => prev + 1)
     }
+    
 
     return {
         data,

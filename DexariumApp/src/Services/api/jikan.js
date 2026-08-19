@@ -1,7 +1,19 @@
-import Jikan from "jikan4.js"
-const client = new Jikan.Client()
+const JIKAN_API_URL ="https://api.jikan.moe/v4/top/anime"
 
 export async function getAnime(page = 1) {
-    const response = await client.top.listAnime(page)
-    return response.slice(0, 20)
+    console.log("Requested page:", page);
+
+    const response = await fetch(
+        `${JIKAN_API_URL}?page=${page}`
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            `Jikan API error: ${response.status} ${response.statusText}`
+        );
+    }
+
+    const data = await response.json();
+
+    return data.data;
 }

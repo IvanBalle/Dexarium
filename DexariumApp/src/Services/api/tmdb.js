@@ -38,28 +38,13 @@ function filterTvShows(shows) {
         return filteredShows
     })
 }
-function removeDuplicates(shows, existingIds) {
-    return shows.filter((show) => {
-        if (existingIds.has(show.id)) {
-            return false
-        }
 
-        existingIds.add(show.id)
-        return true
-    })
-}
-export async function getPopularTvShows(page = 1, limit = 20) {
+export async function getPopularTvShows(page = 1) {
     let currentPage = page
     let tvShows = []
-    const existingIds = new Set()
-
-    while (tvShows.length < limit) {
-        const data = await fetchTvShowsPage(currentPage)
-        const filtered = removeDuplicates(filterTvShows(data.results), existingIds)
+    const data = await fetchTvShowsPage(currentPage)
+    const filtered = filterTvShows(data.results)
         tvShows.push(...filtered)
 
-        currentPage++
-    }
-
-    return tvShows.slice(0, limit)
+    return tvShows
 }
