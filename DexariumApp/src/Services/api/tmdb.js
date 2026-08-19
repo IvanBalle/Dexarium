@@ -1,6 +1,7 @@
 const TMDB_MOVIE_URL = "https://api.themoviedb.org/3/movie/popular"
 const TMDB_API_URL = "https://api.themoviedb.org/3"
-
+import { normalizeMovie } from "../../normalizers/movieNormalizer.js"
+import { normalizeTvShow } from "../../normalizers/tvShowNormalizer.js"
 export async function getPopularMovies(page = 1) {
     const response = await fetch(`${TMDB_MOVIE_URL}?page=${page}`, {
         headers: {
@@ -9,7 +10,7 @@ export async function getPopularMovies(page = 1) {
     })
     const data = await response.json()
     const movies = data.results
-    return movies
+    return movies.map((movie) => normalizeMovie(movie))
 }
 
 async function fetchTvShowsPage(page = 1) {
@@ -44,7 +45,7 @@ export async function getPopularTvShows(page = 1) {
     let tvShows = []
     const data = await fetchTvShowsPage(currentPage)
     const filtered = filterTvShows(data.results)
-        tvShows.push(...filtered)
+    tvShows.push(...filtered)
 
-    return tvShows
+    return tvShows.map((show) => normalizeTvShow(show))
 }

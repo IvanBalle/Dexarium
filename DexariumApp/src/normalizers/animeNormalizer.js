@@ -1,17 +1,21 @@
+import { normalizeDate } from "./normalizeDate.js"
+
 export const normalizeAnime = (anime) => {
     return {
         id: anime.mal_id,
+        type: "anime",
         title: anime.title,
         title_english: anime.title_english === null ? anime.title : anime.title_english,
-        studio: anime.studios && anime.studios.length > 0 ? anime.studios[0].name : null,
+        synopsis: anime.synopsis,
+        releaseDate: normalizeDate(anime.aired?.from),
+        image: anime.images && anime.images.jpg ? anime.images.jpg.image_url : null,
+        score: anime.score,
+        ageRating: anime.rating,
         genres: anime.genres ? anime.genres.map((genre) => genre.name) : [],
         themes: anime.themes ? anime.themes.map((theme) => theme.name) : [],
-        releaseDate: anime.aired && anime.aired.from ? new Date(anime.aired.from).toISOString().split("T")[0] : null,
-        image_url: anime.images && anime.images.jpg ? anime.images.jpg.image_url : null,
-        synopsis: anime.synopsis,
-        score: anime.score,
+        studios: anime.studios?.map((studio) => studio.name) ?? [],
         episodes: anime.episodes,
         status: anime.status,
-        rating: anime.rating,
+        mediaType: anime.type,
     }
 }
