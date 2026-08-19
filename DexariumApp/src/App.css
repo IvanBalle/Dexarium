@@ -12,7 +12,11 @@ h2 {
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
     border-bottom: 2px solid var(--black-shadow-10);
     a,
     a:visited {
@@ -41,6 +45,8 @@ h2 {
         display: flex;
         justify-content: space-evenly;
         gap: 1rem;
+        flex-wrap: wrap;
+        overflow: hidden;
     }
 }
 .center {
@@ -113,7 +119,7 @@ h2 {
 
 .section-list {
     display: grid;
-    grid-template-columns: repeat(4, 230px);
+    grid-template-columns: repeat(auto-fit, 230px);
     max-width: 70svw;
 }
 
