@@ -3,24 +3,24 @@ export const FILTER_CONFIG = {
         title: "Games",
         filters: [
             {
-                key: "releaseYear",
-                label: "Release Year",
-                type: "number",
-            },
-            {
-                key: "country",
-                label: "Country",
+                key: "ageRating",
+                label: "Age Rating",
                 type: "string",
             },
             {
-                key: "publisher",
-                label: "Publisher",
-                type: "string",
+                key: "tags",
+                label: "Tags",
+                type: "array",
             },
             {
-                key: "developer",
-                label: "Developer",
-                type: "string",
+                key: "platforms",
+                label: "Platforms",
+                type: "array",
+            },
+            {
+                key: "stores",
+                label: "Stores",
+                type: "array",
             },
             {
                 key: "genres",
@@ -34,18 +34,59 @@ export const FILTER_CONFIG = {
         title: "Movies",
         filters: [
             {
-                key: "releaseYear",
-                label: "Release Year",
-                type: "number",
-            },
-            {
-                key: "country",
-                label: "Country",
+                key: "ageRating",
+                label: "Age Rating",
                 type: "string",
             },
             {
-                key: "director",
-                label: "Director",
+                key: "genres",
+                label: "Genres",
+                type: "array",
+            },
+        ],
+    },
+    anime: {
+        title: "Anime",
+        filters: [
+            {
+                key: "ageRating",
+                label: "Age Rating",
+                type: "string",
+            },
+            {
+                key: "studios",
+                label: "Studios",
+                type: "array",
+            },
+            {
+                key: "genres",
+                label: "Genres",
+                type: "array",
+            },
+            {
+                key: "themes",
+                label: "Themes",
+                type: "array",
+            },
+            {
+                key: "status",
+                label: "Status",
+                type: "string",
+            },
+        ],
+    },
+
+    tvshows: {
+        title: "TV Shows",
+        filters: [
+            {
+                key: "ageRating",
+                label: "Age Rating",
+                type: "string",
+            },
+            {
+                key: "countries",
+                label: "Countries",
                 type: "array",
             },
             {
@@ -55,57 +96,4 @@ export const FILTER_CONFIG = {
             },
         ],
     },
-        anime: {
-        title: "Anime",
-        filters: [
-            {
-                key: "releaseYear",
-                label: "Release Year",
-                type: "number",
-            },
-            {
-                key: "country",
-                label: "Country",
-                type: "string",
-            },
-            {
-                key: "studio",
-                label: "Studio",
-                type: "array",
-            },
-            {
-                key: "genres",
-                label: "Genres",
-                type: "array",
-            },
-        ]
-    },
-
-    tvshows: {
-        title: "TV Shows",
-        filters: [
-            {
-                key: "releaseYear",
-                label: "Release Year",
-                type: "number",
-            },
-            {
-                key: "country",
-                label: "Country",
-                type: "string",
-            },
-            {
-                key: "creator",
-                label: "Creator",
-                type: "array",
-            },
-            {
-                key: "genres",
-                label: "Genres",
-                type: "array",
-            },
-        ]
-    }
-};
-
-
+}

@@ -1,75 +1,56 @@
 import DisplayFormatInStars from "./DisplayFormatInStars.jsx"
 
-function Card({ item, detailsOrder, onSelectItem }) {
-    if (!item || !Array.isArray(item) || item.length === 0) {
-        return null
-    }
+const LABELS = {
+    releaseYear: "Release Year",
+    ageRating: "Age Rating",
+    averagePlaytime: "Average Playtime",
+    metacriticUserScore: "Metacritic User Score",
+    myAnimeListScore: "MyAnimeList Score",
+}
 
-    // Default order: Publisher - Genres - Release Year - Country - Metacritic score - Average playtime
-    const defaultOrder = [
-        "developer",
-        "director",
-        "studio",
-        "creator",
-        "publisher",
-        "genres",
-        "releaseYear",
-        "country",
-        "metacriticUserScore",
-        "rottenTomatoesScore",
-        "myAnimeListScore",
-        "imdbScore",
-        "averagePlaytime",
-        "duration",
-        "seasons",
-        "episodes",
-    ]
+function formatLabel(key) {
+    return LABELS[key] || key.charAt(0).toUpperCase() + key.slice(1).replace(/([a-z])([A-Z])/g, "$1 $2")
+}
+
+function Card({ item, detailsOrder, onSelectItem }) {
+    if (!Array.isArray(item) || item.length === 0) return null
+
+    const defaultOrder = ["developer", "director", "studio", "creator", "publisher", "genres", "releaseDate", "country", "score", "averagePlaytime", "duration", "seasons", "episodes"]
     const orderToUse = detailsOrder || defaultOrder
 
     const getDetailsByOrder = (entry) => {
-        // Filter out excluded keys and order the remaining by the specified order
-        const entryObj = Object.entries(entry).filter(([key]) => !["id", "title", "slug", "synopsis"].includes(key))
-
-        // Sort by the order specified, then add any remaining keys not in the order
-        return [...orderToUse.filter((key) => key in entry).map((key) => [key, entry[key]]), ...entryObj.filter(([key]) => !orderToUse.includes(key))]
+        const hidden = new Set(["id", "type", "title", "slug", "synopsis", "image", "backdrop", "tagline", "title_english", "backdrop_path", "themes", "tags", "language", "countries", "mediaType"])
+        const remaining = Object.entries(entry).filter(([key, value]) => !hidden.has(key) && value != null && value !== "" && (!Array.isArray(value) || value.length))
+        return [...orderToUse.filter((key) => key in entry).map((key) => [key, entry[key]]), ...remaining.filter(([key]) => !orderToUse.includes(key))]
     }
 
-    return (
-        <>
-            {item.map((entry) => (
-                <article
-                    key={entry.id}
-                    className="card"
-                    onClick={() => onSelectItem?.(entry)}
-                    onKeyDown={(event) => {
-                        if (event.key === "Enter" || event.key === " ") {
-                            event.preventDefault()
-                            onSelectItem?.(entry)
-                        }
-                    }}
-                    tabIndex={0}
-                    role="button"
-                >
-                    <div className="card-media"></div>
-                    {/*  {entry.imageUrl && <div className="card-media">{<img src={entry.imageUrl} alt={entry.title || "item"} />}</div>} */}
-                    {entry.title && <h2 className="card-title">{entry.title}</h2>}
-                    {
-                        <div className="card-details">
-                            {getDetailsByOrder(entry).map(([key, value]) => (
-                                <div key={key} className="card-detail">
-                                    {(() => {
-                                        const label = key.charAt(0).toUpperCase() + key.slice(1)
-                                        return label.replace(/([a-z])([A-Z])/g, "$1 $2")
-                                    })()}
-                                    : <DisplayFormatInStars value={value} keyName={key} />
-                                </div>
-                            ))}
+    return item.map((entry) => (
+        <article
+            key={`${entry.type}-${entry.id}`}
+            className="card"
+            onClick={() => onSelectItem?.(entry)}
+            onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault()
+                    onSelectItem?.(entry)
+                }
+            }}
+            tabIndex={0}
+            role="button"
+        >
+            <div className="card-media">{entry.image ? <img src={entry.image} alt={entry.title || "item"} loading="lazy" /> : <span>No image</span>}</div>
+            <h2 className="card-title">{entry.title || "Untitled"}</h2>
+            <div className="card-details">
+                {getDetailsByOrder(entry)
+                    .slice(0, 5)
+                    .map(([key, value]) => (
+                        <div key={key} className="card-detail">
+                            {formatLabel(key)}: <DisplayFormatInStars value={value} keyName={key} />
                         </div>
-                    }
-                </article>
-            ))}
-        </>
-    )
+                    ))}
+            </div>
+        </article>
+    ))
 }
 
 export default Card

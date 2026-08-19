@@ -1,15 +1,20 @@
-const RAWG_GAMES_API_URL = `https://api.rawg.io/api/games?key=${import.meta.env.VITE_RAWG_API_TOKEN}`
-import { normalizeGame } from "../../normalizers/gameNormalizer.js"
+const RAWG_API_BASE = `https://api.rawg.io/api/games`
+const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_TOKEN
+
+import { normalizeGame, normalizeGameDetails } from "../../normalizers/gameNormalizer.js"
+
 export async function getPopularGames(page = 1) {
-    const response = await fetch(`${RAWG_GAMES_API_URL}&page=${page}`)
+    const url = `${RAWG_API_BASE}?key=${RAWG_API_KEY}&page=${page}`
+    const response = await fetch(url)
+    if (!response.ok) throw new Error(`RAWG API error: ${response.status} ${response.statusText}`)
     const data = await response.json()
-    const games = data.results
-    return games.map((game) => normalizeGame(game))
+    return data.results.map(normalizeGame)
 }
+
 export async function getGameDetails(id) {
-    const response = await fetch(`${RAWG_GAMES_API_URL}/${id}`)
-
+    const url = `${RAWG_API_BASE}/${encodeURIComponent(id)}?key=${RAWG_API_KEY}`
+    const response = await fetch(url)
+    if (!response.ok) throw new Error(`RAWG API error: ${response.status} ${response.statusText}`)
     const data = await response.json()
-
-    return normalizeGame(data)
+    return normalizeGameDetails(data)
 }

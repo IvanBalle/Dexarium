@@ -1,15 +1,18 @@
-const JIKAN_API_URL = "https://api.jikan.moe/v4/top/anime"
+const JIKAN_API_URL = "https://api.jikan.moe/v4"
 import { normalizeAnime } from "../../normalizers/animeNormalizer.js"
+
+async function jikanFetch(path) {
+    const response = await fetch(`${JIKAN_API_URL}${path}`)
+    if (!response.ok) throw new Error(`Jikan API error: ${response.status} ${response.statusText}`)
+    return response.json()
+}
+
 export async function getAnime(page = 1) {
-    console.log("Requested page:", page)
+    const data = await jikanFetch(`/top/anime?page=${page}`)
+    return data.data.map(normalizeAnime)
+}
 
-    const response = await fetch(`${JIKAN_API_URL}?page=${page}`)
-
-    if (!response.ok) {
-        throw new Error(`Jikan API error: ${response.status} ${response.statusText}`)
-    }
-
-    const data = await response.json()
-
-    return data.data.map((anime) => normalizeAnime(anime))
+export async function getAnimeDetails(id) {
+    const data = await jikanFetch(`/anime/${id}/full`)
+    return normalizeAnime(data.data)
 }

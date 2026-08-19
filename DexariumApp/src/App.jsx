@@ -1,7 +1,6 @@
 import { useState } from "react"
 import "./App.css"
 import Nav from "./Components/Nav.jsx"
-import DB from "../Backend/Database.json"
 import Card from "./Components/Card.jsx"
 import Carousel from "./Components/Carousel.jsx"
 import SearchBar from "./Components/SearchBar.jsx"
@@ -14,38 +13,19 @@ import { getAnime } from "./Services/api/jikan.js"
 import { getPopularGames } from "./Services/api/rawg.js"
 
 function App({ initialCategory = null }) {
-    console.log(DB)
-    const { data: games, loadMore: loadMoreGames, loading: loadingGames } = useFetch(getPopularGames, (game) => game.id)
-    console.log(
-        "Games",
-        games.map((game) => game),
-    )
-    const { data: anime, loadMore: loadMoreAnime, loading: loadingAnime } = useFetch(getAnime, (anime) => anime.mal_id)
-    console.log(
-        "Anime:",
-        anime.map((oneAnime) => oneAnime),
-    )
-    const { data: movies, loadMore: loadMoreMovies, loading: loadingMovies } = useFetch(getPopularMovies, (movie) => movie.id)
-    console.log(
-        "Movies :",
-        movies.map((movie) => movie),
-    )
-
-    const { data: tvShows, loadMore: loadMoreTvshows, loading: loadingTvshows } = useFetch(getPopularTvShows, (show) => show.id)
-    console.log(
-        "TV Shows :",
-        tvShows.map((tvshow) => tvshow),
-    )
+    const { data: games, loadMore: loadMoreGames, loading: loadingGames } = useFetch(getPopularGames)
+    const { data: anime, loadMore: loadMoreAnime, loading: loadingAnime } = useFetch(getAnime)
+    const { data: movies, loadMore: loadMoreMovies, loading: loadingMovies } = useFetch(getPopularMovies)
+    const { data: tvShows, loadMore: loadMoreTvshows, loading: loadingTvshows } = useFetch(getPopularTvShows)
 
     const categories = [
-        { key: "games", titleKey: "Games", items: DB.games || [] },
-        { key: "movies", titleKey: "Movies", items: DB.movies || [] },
-        { key: "anime", titleKey: "Anime", items: DB.anime || [] },
-        { key: "tvshows", titleKey: "TV shows", items: DB.TVshows || [] },
+        { key: "games", titleKey: "Games", items: games },
+        { key: "movies", titleKey: "Movies", items: movies },
+        { key: "anime", titleKey: "Anime", items: anime },
+        { key: "tvshows", titleKey: "TV shows", items: tvShows },
     ]
 
     const selectedCategory = categories.some((item) => item.key === initialCategory) ? initialCategory : null
-
     const [searchResults, setSearchResults] = useState([])
     const [hasSearched, setHasSearched] = useState(false)
     const [activeFilters, setActiveFilters] = useState({})
@@ -60,25 +40,21 @@ function App({ initialCategory = null }) {
         anime: loadMoreAnime,
         tvshows: loadMoreTvshows,
     }
+
     const isLoading = loadingGames || loadingMovies || loadingAnime || loadingTvshows
     const loadMoreFunction = () => {
         if (isLoading) return
         Object.values(loadMoreMap).forEach((loadMore) => loadMore())
     }
-    const getFilteredItems = (items, categoryKey) => {
-        if (!items) return []
 
-        return items.filter((item) => {
+    const getFilteredItems = (items, categoryKey) => {
+        return (items || []).filter((item) => {
             const matchesCategory = !selectedCategory || categoryKey === selectedCategory
             const matchesSearch = !searchResults.length || filteredSearchResults.some((group) => group.key === categoryKey)
 
             const matchesFiltersForItem = Object.entries(activeFilters).every(([fullKey, selectedValues]) => {
                 const [filterCategory, filterKey] = fullKey.split(".")
-
-                if (filterCategory !== categoryKey) {
-                    return true
-                }
-
+                if (filterCategory !== categoryKey) return true
                 return matchesFilters(item, filterKey, selectedValues)
             })
 
@@ -87,17 +63,11 @@ function App({ initialCategory = null }) {
     }
 
     const renderableCategories = visibleCategories
-        .map((category) => ({
-            ...category,
-            items: getFilteredItems(category.items, category.key),
-        }))
+        .map((category) => ({ ...category, items: getFilteredItems(category.items, category.key) }))
         .filter((category) => category.items.length > 0)
 
     const renderableSearchResults = filteredSearchResults
-        .map((group) => ({
-            ...group,
-            items: getFilteredItems(group.items, group.key),
-        }))
+        .map((group) => ({ ...group, items: getFilteredItems(group.items, group.key) }))
         .filter((group) => group.items.length > 0)
 
     return (
@@ -114,8 +84,8 @@ function App({ initialCategory = null }) {
                 </section>
 
                 <section className="content">
-                    <SearchBar setSearchResults={setSearchResults} setHasSearched={setHasSearched} />
-                    <FilterList onFiltersChange={setActiveFilters} selectedCategory={selectedCategory} />
+                    <SearchBar categories={categories} setSearchResults={setSearchResults} setHasSearched={setHasSearched} />
+                    <FilterList categories={categories} onFiltersChange={setActiveFilters} selectedCategory={selectedCategory} />
                     {hasSearched && searchResults.length === 0 ? (
                         <h3 className="no-results">Error 404: No results found</h3>
                     ) : searchResults.length > 0 ? (
@@ -123,7 +93,7 @@ function App({ initialCategory = null }) {
                             <section key={group.key} className="category-section">
                                 <h2 className="category-title">{group.titleKey}</h2>
                                 <Carousel containerKey={group.key}>
-                                    <Card item={group.items} titleKey={group.titleKey} onSelectItem={setSelectedItem} />
+                                    <Card item={group.items} onSelectItem={setSelectedItem} />
                                 </Carousel>
                             </section>
                         ))
@@ -132,7 +102,7 @@ function App({ initialCategory = null }) {
                             <section key={key} className="category-section">
                                 <h2 className="category-title">{titleKey}</h2>
                                 <Carousel containerKey={key}>
-                                    <Card item={items} titleKey={titleKey} onSelectItem={setSelectedItem} />
+                                    <Card item={items} onSelectItem={setSelectedItem} />
                                 </Carousel>
                             </section>
                         ))

@@ -1,6 +1,5 @@
-
 h2 {
-    color: var(--text-color)
+    color: var(--text-color);
 }
 .navbar {
     display: grid;
@@ -11,9 +10,9 @@ h2 {
     color: var(--text-color);
     background-color: var(--nav-cards-color);
     position: absolute;
-    top:0;
-    left:0;
-    width:100%;
+    top: 0;
+    left: 0;
+    width: 100%;
     border-bottom: 2px solid var(--black-shadow-10);
     a,
     a:visited {
@@ -50,13 +49,13 @@ h2 {
     gap: 32px;
     align-items: center;
     padding: 32px 20px;
-    margin-top:4rem;
+    margin-top: 4rem;
 }
 .center,
-.content{
-    width:100%;
+.content {
+    width: 100%;
 }
-.app-intro{
+.app-intro {
     text-align: center;
     color: var(--text-color);
 }
@@ -89,19 +88,19 @@ h2 {
     color: var(--text-color);
 }
 
-.filters-container{
-    margin-bottom:3rem;
-    display:flex;
+.filters-container {
+    margin-bottom: 3rem;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     gap: 12px;
-    color:  var(--text-color);
-    padding-block:5px;
+    color: var(--text-color);
+    padding-block: 5px;
 
-    h5{
-        margin-block:0;
+    h5 {
+        margin-block: 0;
     }
 }
 
@@ -110,11 +109,10 @@ h2 {
     color: var(--text-color);
     min-width: max-content;
     gap: 12px;
-    
 }
 
-.section-list{
-    display:grid;
+.section-list {
+    display: grid;
     grid-template-columns: repeat(4, 230px);
     max-width: 70svw;
 }
@@ -124,7 +122,7 @@ h2 {
     align-self: flex-start;
 }
 
-.group-list{
+.group-list {
     display: flex;
     z-index: 100;
     width: 100%;
@@ -147,7 +145,7 @@ h2 {
 
 .filter-section-title-active,
 .filter-group-title-active,
-.filter-checkbox-active{
+.filter-checkbox-active {
     color: var(--active-color);
     font-weight: bold;
     text-decoration: underline;
@@ -155,15 +153,15 @@ h2 {
 
 .filter-options {
     display: grid;
-    grid-template-columns: repeat(4  , 1fr);
+    grid-template-columns: repeat(4, 1fr);
     max-width: 70svw;
     gap: 6px;
     padding: 12px;
     background-color: var(--accent-color);
     outline: 3px solid var(--borders-color);
     border-radius: 12px;
-    min-width:min-content;
-    z-index:1000;
+    min-width: min-content;
+    z-index: 1000;
 }
 
 .filter-checkbox {
@@ -175,7 +173,7 @@ h2 {
 }
 
 .category-section {
-    display:grid;
+    display: grid;
     width: 75svw;
     grid-template-rows: 50px 1fr;
 }
@@ -184,18 +182,18 @@ h2 {
     text-align: center;
     font-size: 2rem;
     margin: 0 0 8px;
-    grid-row:1;
+    grid-row: 1;
 }
 .carousel-container {
     background-color: var(--nav-cards-color-50);
     border-radius: 12px;
-    grid-row:2;
+    grid-row: 2;
     padding-inline: clamp(12px, 4vw, 32px);
 }
 .category-nav {
-    display:grid;
+    display: grid;
     gap: 20px;
-    grid-template-columns:  100px 1fr 100px;    
+    grid-template-columns: 100px 1fr 100px;
     width: 100%;
     position: relative;
     padding-bottom: 16px;
@@ -213,7 +211,7 @@ h2 {
     min-width: 100px;
     min-height: 10%;
     max-height: 50px;
-    align-self:center;
+    align-self: center;
     border: none;
     border-radius: 12px;
     background-color: var(--nav-cards-color);
@@ -222,11 +220,11 @@ h2 {
     cursor: pointer;
     flex-shrink: 0;
     position: relative;
-    margin-inline:auto;
+    margin-inline: auto;
     outline: 3px solid var(--borders-color);
 
-    .category-nav-btn-icon-before{
-        grid-row:2;
+    .category-nav-btn-icon-before {
+        grid-row: 2;
         grid-column: 1;
         &::after {
             content: "<";
@@ -236,12 +234,11 @@ h2 {
             transform: translate(-50%, -50%);
         }
     }
-    
-    .category-nav-btn-icon-after{
-        grid-row:2;
+
+    .category-nav-btn-icon-after {
+        grid-row: 2;
         grid-column: 3;
 
-    
         &::after {
             content: ">";
             position: absolute;
@@ -250,7 +247,7 @@ h2 {
             transform: translate(-50%, -50%);
         }
     }
-    
+
     &:hover {
         background: var(--accent-color);
         color: var(--active-color);
@@ -276,10 +273,10 @@ h2 {
     -ms-overflow-style: none;
     width: 92%;
 }
-.not-home{
-    justify-self:center;
+.not-home {
+    justify-self: center;
 }
-.not-home-content{
+.not-home-content {
     flex-wrap: wrap;
 }
 .category-items-center {
@@ -314,13 +311,13 @@ h2 {
 .card {
     flex: 0 0 auto;
     min-width: clamp(220px, 20vw, 300px);
-    width:min-content;
+    width: min-content;
     scroll-snap-align: start;
     scroll-snap-stop: always;
     border-radius: 12px;
     outline: 3px solid var(--borders-color);
     background-color: var(--nav-cards-color);
-    display:grid;
+    display: grid;
     grid-template-rows: 2fr 0.7fr 2fr;
     max-height: 500px;
 
@@ -340,13 +337,25 @@ h2 {
     grid-row: 1;
 }
 
+.card-media {
+    overflow: hidden;
+    position: relative;
+}
+
+.card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 .card-title {
     font-size: 1.5rem;
     font-weight: bold;
     margin: 0.5rem 0;
     text-align: center;
-    grid-row:2;
-    padding-inline:0.2rem;
+    grid-row: 2;
+    padding-inline: 0.2rem;
 }
 
 .card-details {
@@ -354,7 +363,7 @@ h2 {
     color: var(--secondary-text-color);
     text-align: left;
     padding: 0.5rem;
-    grid-row:3;
+    grid-row: 3;
 }
 
 .lightbox-backdrop {
@@ -400,6 +409,17 @@ h2 {
     background-color: #11637c;
     min-height: 260px;
     border-right: 3px solid var(--borders-color);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .lightbox-content {

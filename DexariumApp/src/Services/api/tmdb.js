@@ -1,51 +1,53 @@
-const TMDB_MOVIE_URL = "https://api.themoviedb.org/3/movie/popular"
 const TMDB_API_URL = "https://api.themoviedb.org/3"
 import { normalizeMovie } from "../../normalizers/movieNormalizer.js"
-import { normalizeTvShow } from "../../normalizers/tvShowNormalizer.js"
-export async function getPopularMovies(page = 1) {
-    const response = await fetch(`${TMDB_MOVIE_URL}?page=${page}`, {
-        headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_TOKEN}`,
-        },
+import { normalizeTvShow } from "../../normalizers/tvshowNormalizer.js"
+
+const tmdbFetch = async (path, params = {}) => {
+    const url = new URL(`${TMDB_API_URL}${path}`)
+    Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value))
+    const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_TOKEN}` },
     })
-    const data = await response.json()
-    const movies = data.results
-    return movies.map((movie) => normalizeMovie(movie))
+    if (!response.ok) throw new Error(`TMDB API error: ${response.status} ${response.statusText}`)
+    return response.json()
+}
+
+export async function getPopularMovies(page = 1) {
+    const data = await tmdbFetch("/movie/popular", { page })
+    return data.results.map(normalizeMovie)
 }
 
 async function fetchTvShowsPage(page = 1) {
-    const url = new URL(`${TMDB_API_URL}/discover/tv`)
-
-    url.searchParams.set("include_adult", "false")
-    url.searchParams.set("include_null_first_air_dates", "false")
-    url.searchParams.set("sort_by", "popularity.desc")
-    url.searchParams.set("vote_count.gte", "1000")
-    url.searchParams.set("vote_average.gte", "7")
-    url.searchParams.set("without_genres", "10763,10764,10767")
-    url.searchParams.set("page", page)
-
-    const response = await fetch(url, {
-        headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_TOKEN}`,
-        },
+    return tmdbFetch("/discover/tv", {
+        include_adult: "false",
+        include_null_first_air_dates: "false",
+        sort_by: "popularity.desc",
+        "vote_count.gte": "1000",
+        "vote_average.gte": "7",
+        without_genres: "10763,10764,10767",
+        page,
     })
-    return response.json()
 }
+
 function filterTvShows(shows) {
     return shows.filter((show) => {
-        const isAnimation = show.genre_ids.includes(16)
+        const isAnimation = show.genre_ids?.includes(16)
         const isJapanese = show.origin_country?.includes("JP") || show.original_language === "ja"
-        const filteredShows = !(isAnimation && isJapanese)
-        return filteredShows
+        return !(isAnimation && isJapanese)
     })
 }
 
 export async function getPopularTvShows(page = 1) {
-    let currentPage = page
-    let tvShows = []
-    const data = await fetchTvShowsPage(currentPage)
-    const filtered = filterTvShows(data.results)
-    tvShows.push(...filtered)
+    const data = await fetchTvShowsPage(page)
+    return filterTvShows(data.results).map(normalizeTvShow)
+}
 
-    return tvShows.map((show) => normalizeTvShow(show))
+export async function getMovieDetails(id) {
+    const data = await tmdbFetch(`/movie/${id}`, { append_to_response: "credits" })
+    return normalizeMovie(data)
+}
+
+export async function getTvShowDetails(id) {
+    const data = await tmdbFetch(`/tv/${id}`)
+    return normalizeTvShow(data)
 }
